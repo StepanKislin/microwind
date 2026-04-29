@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroWind CSS — Утилитарная библиотека нового поколения</title>
+  <link rel="stylesheet" href="microwind.css">
+  <style>
+    /* Минимальные кастомные стили только для UI лендинга */
+    :root { --accent: #3b82f6; --glass: rgba(255,255,255,0.85); }
+    .nav-glass { background: var(--glass); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
+    .hero-gradient { background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent); }
+    .code-block { background: #1e293b; color: #e2e8f0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; padding: 1.25rem; border-radius: 0.75rem; overflow-x: auto; position: relative; }
+    .code-block::before { content: "html"; position: absolute; top: 0.5rem; right: 0.75rem; font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+    .editor-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; min-height: 450px; }
+    .editor { background: #0f172a; color: #e2e8f0; font-family: ui-monospace, monospace; font-size: 14px; padding: 1rem; border-radius: 0.75rem; resize: vertical; outline: none; border: 1px solid #334155; line-height: 1.5; }
+    .editor:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+    .preview { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.5rem; overflow: auto; position: relative; }
+    .preview::after { content: "Live Preview"; position: absolute; top: 0.75rem; right: 1rem; font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+    .copy-btn { background: #e2e8f0; border: none; padding: 0.35rem 0.6rem; border-radius: 0.375rem; font-size: 11px; font-weight: 500; cursor: pointer; transition: 0.2s; color: #334155; }
+    .copy-btn:hover { background: #cbd5e1; } .copy-btn.copied { background: #10b981; color: #fff; }
+    .feature-card { transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #e2e8f0; }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15); }
+    @media (max-width: 768px) { .editor-wrap { grid-template-columns: 1fr; } }
+    /* Плавный скролл для якорей */
+    html { scroll-padding-top: 80px; }
+  </style>
+</head>
+<body class="text-base font-normal text-gray-800 bg-white">
+
+<!-- Навигация -->
+<nav class="nav-glass fixed top-0 left-0 w-full z-50 px-4 py-3 flex justify-between items-center">
+  <div class="flex items-center gap-2">
+    <div class="w-8 h-8 bg-blue rounded-md flex items-center justify-center text-white font-bold text-lg">M</div>
+    <span class="text-xl font-bold tracking-tight">MicroWind</span>
+  </div>
+  <div class="hidden sm:flex gap-6 text-sm font-medium text-gray-600">
+    <a href="#features" class="hover:text-blue transition-colors">Возможности</a>
+    <a href="#docs" class="hover:text-blue transition-colors">Документация</a>
+    <a href="#playground" class="hover:text-blue transition-colors">Песочница</a>
+  </div>
+  <button class="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors focus:ring-2 focus:ring-blue cursor-pointer">v1.0.0</button>
+</nav>
+
+<!-- Hero -->
+<header class="hero-gradient pt-32 pb-20 px-4 text-center relative overflow-hidden">
+  <div class="max-w-4xl mx-auto">
+    <span class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wide text-blue bg-blue/10 rounded-full uppercase">Open Source • Zero Build</span>
+    <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-6">CSS без магии.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue via-indigo to-violet">Только классы.</span></h1>
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">Утилитарная библиотека с короткими именами. Никакого JS, никаких конфликтов. Просто прописывайте классы в HTML и собирайте интерфейсы как LEGO.</p>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+      <a href="#docs" class="bg-blue text-white px-8 py-3.5 rounded-xl font-semibold text-lg hover:bg-indigo transition-all hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">Начать изучение</a>
+      <a href="#playground" class="bg-white text-gray-800 border border-gray-200 px-8 py-3.5 rounded-xl font-semibold text-lg hover:border-blue hover:text-blue transition-all hover:shadow-lg cursor-pointer">Открыть песочницу</a>
+    </div>
+
+    <div class="code-block text-left max-w-xl mx-auto shadow-xl">
+      <code class="block text-sm">
+        <span class="text-pink">&lt;div</span> <span class="text-purple">class</span>=<span class="text-green">"flex justify-center items-center h-screen"</span><span class="text-pink">&gt;</span><br>
+        &nbsp;&nbsp;<span class="text-pink">&lt;h1</span> <span class="text-purple">class</span>=<span class="text-green">"text-4xl font-bold text-indigo hover:scale-105 transition cursor-pointer"</span><span class="text-pink">&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Готово!<br>
+        &nbsp;&nbsp;<span class="text-pink">&lt;/h1&gt;</span><br>
+        <span class="text-pink">&lt;/div&gt;</span>
+      </code>
+    </div>
+  </div>
+</header>
+
+<!-- Фичи -->
+<section id="features" class="py-20 px-4 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Почему MicroWind?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="feature-card bg-white p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-blue/10 text-blue rounded-xl flex items-center justify-center text-2xl mb-4">⚡️</div>
+        <h3 class="text-xl font-bold mb-3">Нулевой оверхед</h3>
+        <p class="text-gray-600 leading-relaxed">Только чистый CSS. Без сборки, без препроцессоров, без зависимостей. Весит ~4KB gzip. Загружается мгновенно.</p>
+      </div>
+      <div class="feature-card bg-white p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-indigo/10 text-indigo rounded-xl flex items-center justify-center text-2xl mb-4">🧩</div>
+        <h3 class="text-xl font-bold mb-3">Атомарная композиция</h3>
+        <p class="text-gray-600 leading-relaxed">Объединяйте `.flex .justify-center .gap-4 .p-8`. Каждый класс делает одно, предсказуемое действие.</p>
+      </div>
+      <div class="feature-card bg-white p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-emerald/10 text-emerald rounded-xl flex items-center justify-center text-2xl mb-4">🎨</div>
+        <h3 class="text-xl font-bold mb-3">CSS-переменные</h3>
+        <p class="text-gray-600 leading-relaxed">Легко кастомизировать через `:root`. Меняйте палитру, радиусы, тени и отступы в 2 строки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Документация -->
+<section id="docs" class="py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">📖 Документация</h2>
+
+    <!-- Layout -->
+    <div class="mb-16">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-blue rounded-full"></span> Layout & Flex/Grid</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border border-gray-200 rounded-xl p-5 bg-white">
+          <code class="text-sm text-indigo font-mono block mb-3">.flex .justify-between .items-center</code>
+          <div class="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
+            <div class="w-10 h-10 bg-blue rounded-lg"></div>
+            <div class="w-10 h-10 bg-red rounded-lg"></div>
+          </div>
+          <button class="copy-btn mt-3" data-code=".flex .justify-between .items-center">Копировать</button>
+        </div>
+        <div class="border border-gray-200 rounded-xl p-5 bg-white">
+          <code class="text-sm text-indigo font-mono block mb-3">.grid .grid-cols-3 .gap-4</code>
+          <div class="grid grid-cols-3 gap-4 p-3 bg-gray-100 rounded-lg">
+            <div class="bg-green h-12 rounded-lg"></div>
+            <div class="bg-yellow h-12 rounded-lg"></div>
+            <div class="bg-purple h-12 rounded-lg"></div>
+          </div>
+          <button class="copy-btn mt-3" data-code=".grid .grid-cols-3 .gap-4">Копировать</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacing -->
+    <div class="mb-16">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-emerald rounded-full"></span> Spacing & Sizing</h3>
+      <div class="border border-gray-200 rounded-xl p-5 bg-white">
+        <code class="text-sm text-indigo font-mono block mb-3">.p-6 .px-4 .py-8 .mt-4 .mb-8 .gap-2</code>
+        <div class="p-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+          <div class="px-4 py-8 mt-4 mb-8 bg-white rounded-lg shadow-sm border">
+            <p class="text-center text-gray-500 text-sm">Внутренние/внешние отступы работают по системе 4px (1rem = 4)</p>
+          </div>
+        </div>
+        <button class="copy-btn mt-3" data-code=".p-6 .px-4 .py-8 .mt-4 .mb-8 .gap-2">Копировать</button>
+      </div>
+    </div>
+
+    <!-- Typography & Colors -->
+    <div class="mb-16">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-purple rounded-full"></span> Typography & Colors</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border border-gray-200 rounded-xl p-5 bg-white">
+          <code class="text-sm text-indigo font-mono block mb-3">.text-3xl .font-bold .tracking-tight</code>
+          <div class="text-3xl font-bold tracking-tight p-4 bg-gray-50 rounded-lg">Заголовок</div>
+          <button class="copy-btn mt-3" data-code=".text-3xl .font-bold .tracking-tight">Копировать</button>
+        </div>
+        <div class="border border-gray-200 rounded-xl p-5 bg-white">
+          <code class="text-sm text-indigo font-mono block mb-3">.bg-indigo .text-white .p-4 .rounded-xl</code>
+          <button class="bg-indigo text-white p-4 rounded-xl w-full hover:opacity-90 transition cursor-pointer">Кнопка с фоном</button>
+          <button class="copy-btn mt-3" data-code=".bg-indigo .text-white .p-4 .rounded-xl">Копировать</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive -->
+    <div class="mb-8">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-amber rounded-full"></span> Transitions & Hover</h3>
+      <div class="border border-gray-200 rounded-xl p-5 bg-white">
+        <code class="text-sm text-indigo font-mono block mb-3">.hover-scale .transition-all .duration-200 .shadow-lg .hover:shadow-xl</code>
+        <div class="flex justify-center p-8 bg-gray-50 rounded-lg">
+          <div class="w-28 h-28 bg-gradient-to-br from-pink to-purple rounded-2xl shadow-lg hover-scale transition-all duration-200 hover:shadow-xl cursor-pointer flex items-center justify-center text-white font-bold text-2xl">✨</div>
+        </div>
+        <button class="copy-btn mt-3" data-code=".hover-scale .transition-all .duration-200 .shadow-lg .hover:shadow-xl">Копировать</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Песочница -->
+<section id="playground" class="py-20 px-4 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">🛠 Интерактивная песочница</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Пишите HTML с классами MicroWind слева → видите результат справа мгновенно. Экспериментируйте без ограничений.</p>
+    </div>
+
+    <div class="editor-wrap shadow-xl rounded-2xl overflow-hidden bg-white border border-gray-200">
+        <textarea id="code-input" class="editor" spellcheck="false">
+<div class="flex flex-col items-center gap-6 p-10 bg-gradient-to-b from-white to-gray-50 h-full">
+  <div class="flex items-center gap-3 mb-4">
+    <div class="w-12 h-12 bg-blue rounded-xl flex items-center justify-center text-white text-2xl">⚡</div>
+    <h2 class="text-3xl font-bold text-gray-800">MicroWind Playground</h2>
+  </div>
+
+  <p class="text-center text-gray-600 max-w-md">
+    Это живая песочница. Меняйте классы, добавляйте блоки, экспериментируйте с сеткой и отступами.
+  </p>
+
+  <div class="flex flex-wrap justify-center gap-3 mt-2">
+    <button class="bg-green text-white px-5 py-2.5 rounded-lg font-medium hover:bg-emerald transition hover:scale-105 cursor-pointer">
+      Успех
+    </button>
+    <button class="bg-red text-white px-5 py-2.5 rounded-lg font-medium hover:bg-red/80 transition hover:scale-105 cursor-pointer">
+      Отмена
+    </button>
+    <button class="border-2 border-blue text-blue px-5 py-2.5 rounded-lg font-medium hover:bg-blue hover:text-white transition cursor-pointer">
+      Outline
+    </button>
+  </div>
+
+  <div class="mt-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm w-full max-w-sm">
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-sm font-medium text-gray-700">Прогресс</span>
+      <span class="text-xs font-bold text-green bg-green/10 px-2 py-1 rounded">85%</span>
+    </div>
+    <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div class="h-full bg-blue w-[85%] rounded-full"></div>
+    </div>
+  </div>
+</div></textarea>
+      <div id="live-preview" class="preview flex items-center justify-center">
+        <!-- Здесь рендерится результат -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center py-12 px-4 text-gray-500 text-sm border-t bg-white">
+  <p class="mb-2">© 2026 MicroWind CSS. Собрано вручную. Никаких зависимостей.</p>
+  <p class="text-xs text-gray-400">Лицензия MIT • Сделано для скорости и контроля</p>
+</footer>
+
+<script>
+  // Живой предпросмотр
+  const input = document.getElementById('code-input');
+  const preview = document.getElementById('live-preview');
+
+  function updatePreview() {
+    preview.innerHTML = input.value;
+  }
+
+  input.addEventListener('input', updatePreview);
+  updatePreview();
+
+  // Копирование кода
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.getAttribute('data-code');
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = '✓ Скопировано';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Копировать';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    });
+  });
+
+  // Плавный скролл для якорей
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
