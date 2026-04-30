@@ -3,255 +3,817 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MicroWind CSS — Утилитарная библиотека нового поколения</title>
+  <title>MicroWind CSS — Лёгкая utility-first библиотека</title>
+  <meta name="description" content="MicroWind CSS — компактная utility-first библиотека с готовыми классами для layout, spacing, typography и быстрым подключением через GitHub Pages.">
   <link rel="stylesheet" href="microwind.css">
   <style>
-    /* Минимальные кастомные стили только для UI лендинга */
-    :root { --accent: #3b82f6; --glass: rgba(255,255,255,0.85); }
-    .nav-glass { background: var(--glass); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
-    .hero-gradient { background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent); }
-    .code-block { background: #1e293b; color: #e2e8f0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; padding: 1.25rem; border-radius: 0.75rem; overflow-x: auto; position: relative; }
-    .code-block::before { content: "html"; position: absolute; top: 0.5rem; right: 0.75rem; font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
-    .editor-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; min-height: 450px; }
-    .editor { background: #0f172a; color: #e2e8f0; font-family: ui-monospace, monospace; font-size: 14px; padding: 1rem; border-radius: 0.75rem; resize: vertical; outline: none; border: 1px solid #334155; line-height: 1.5; }
-    .editor:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
-    .preview { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.5rem; overflow: auto; position: relative; }
-    .preview::after { content: "Live Preview"; position: absolute; top: 0.75rem; right: 1rem; font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-    .copy-btn { background: #e2e8f0; border: none; padding: 0.35rem 0.6rem; border-radius: 0.375rem; font-size: 11px; font-weight: 500; cursor: pointer; transition: 0.2s; color: #334155; }
-    .copy-btn:hover { background: #cbd5e1; } .copy-btn.copied { background: #10b981; color: #fff; }
-    .feature-card { transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #e2e8f0; }
-    .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15); }
-    @media (max-width: 768px) { .editor-wrap { grid-template-columns: 1fr; } }
-    /* Плавный скролл для якорей */
-    html { scroll-padding-top: 80px; }
+    :root {
+      --page-bg: #f5efe6;
+      --page-ink: #1f2937;
+      --page-muted: #6b7280;
+      --page-panel: rgba(255, 250, 244, 0.82);
+      --page-line: rgba(148, 163, 184, 0.28);
+      --hero-a: #f97316;
+      --hero-b: #0ea5e9;
+      --hero-c: #0f172a;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(249, 115, 22, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.16), transparent 28%),
+        linear-gradient(180deg, #fff9f2 0%, var(--page-bg) 45%, #ffffff 100%);
+      color: var(--page-ink);
+    }
+
+    .page-shell {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(30px);
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .page-shell::before {
+      width: 320px;
+      height: 320px;
+      background: rgba(249, 115, 22, 0.12);
+      top: 70px;
+      left: -110px;
+    }
+
+    .page-shell::after {
+      width: 380px;
+      height: 380px;
+      background: rgba(14, 165, 233, 0.12);
+      top: 260px;
+      right: -150px;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-glass {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 250, 244, 0.72);
+      border-bottom: 1px solid var(--page-line);
+    }
+
+    .hero {
+      padding: 5rem 0 3rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(251, 146, 60, 0.2);
+      color: #9a3412;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 14px 34px -24px rgba(15, 23, 42, 0.35);
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 6.25rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+      margin-top: 1.5rem;
+    }
+
+    .hero-title span {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--hero-a), var(--hero-b), var(--hero-c));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 640px;
+      color: var(--page-muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+      margin-top: 1.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 2rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    .glass-card,
+    .feature-card,
+    .docs-card,
+    .playground-card,
+    .download-card {
+      background: var(--page-panel);
+      border: 1px solid var(--page-line);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 24px 70px -48px rgba(15, 23, 42, 0.35);
+    }
+
+    .glass-card {
+      border-radius: 28px;
+      padding: 1.6rem;
+    }
+
+    .signal-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .signal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 9999px;
+    }
+
+    .code-panel {
+      background: #101827;
+      color: #e5eefb;
+      border-radius: 22px;
+      padding: 1.4rem;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.93rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .preview-stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .stat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .hero-button,
+    .ghost-button,
+    .mini-button,
+    .copy-btn {
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      font-weight: 700;
+    }
+
+    .hero-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.35rem;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      box-shadow: 0 18px 36px -22px rgba(234, 88, 12, 0.75);
+    }
+
+    .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.35rem;
+      background: rgba(255, 255, 255, 0.74);
+      color: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .hero-button:hover,
+    .ghost-button:hover,
+    .mini-button:hover,
+    .copy-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .mini-button,
+    .copy-btn {
+      padding: 0.75rem 1rem;
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .mini-button.alt,
+    .copy-btn.alt {
+      background: rgba(255, 255, 255, 0.82);
+      color: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    section {
+      padding: 3.5rem 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .section-text {
+      max-width: 560px;
+      color: var(--page-muted);
+      line-height: 1.8;
+    }
+
+    .features-grid,
+    .docs-grid,
+    .download-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .features-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .feature-card,
+    .docs-card,
+    .download-card,
+    .playground-card {
+      border-radius: 26px;
+      padding: 1.5rem;
+    }
+
+    .feature-card {
+      min-height: 100%;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.16), rgba(14, 165, 233, 0.16));
+    }
+
+    .feature-card p,
+    .docs-card p,
+    .download-card p,
+    .playground-note {
+      color: var(--page-muted);
+      line-height: 1.75;
+    }
+
+    .docs-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .docs-card code,
+    .download-card code,
+    .code-inline {
+      display: inline-block;
+      padding: 0.2rem 0.45rem;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92rem;
+    }
+
+    .demo-slab {
+      margin-top: 1rem;
+      border-radius: 20px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .copy-btn {
+      margin-top: 1rem;
+      font-size: 0.92rem;
+    }
+
+    .copy-btn.copied {
+      background: #059669;
+      color: #fff;
+    }
+
+    .download-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .install-box {
+      margin-top: 1rem;
+      border-radius: 18px;
+      background: #101827;
+      color: #d9e5f7;
+      padding: 1rem;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92rem;
+      overflow-x: auto;
+    }
+
+    .download-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .link-output {
+      display: block;
+      margin-top: 0.85rem;
+      padding: 0.95rem 1rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      color: #0f172a;
+      word-break: break-all;
+      line-height: 1.7;
+    }
+
+    .editor-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
+      min-height: 520px;
+    }
+
+    .editor,
+    .preview {
+      border-radius: 22px;
+      min-height: 520px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .editor {
+      background: #0f172a;
+      color: #ecf5ff;
+      padding: 1.15rem;
+      resize: vertical;
+      outline: none;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      line-height: 1.6;
+    }
+
+    .editor:focus {
+      border-color: rgba(14, 165, 233, 0.6);
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.16);
+    }
+
+    .preview {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+      padding: 1.4rem;
+      overflow: auto;
+      position: relative;
+    }
+
+    .preview::after {
+      content: "Live Preview";
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .footer-note {
+      border-top: 1px solid var(--page-line);
+      color: var(--page-muted);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .features-grid,
+      .docs-grid,
+      .download-grid,
+      .editor-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        padding-top: 3.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .button-row,
+      .download-actions {
+        flex-direction: column;
+      }
+
+      .hero-button,
+      .ghost-button,
+      .mini-button,
+      .copy-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
-<body class="text-base font-normal text-gray-800 bg-white">
-
-<!-- Навигация -->
-<nav class="nav-glass fixed top-0 left-0 w-full z-50 px-4 py-3 flex justify-between items-center">
-  <div class="flex items-center gap-2">
-    <div class="w-8 h-8 bg-blue rounded-md flex items-center justify-center text-white font-bold text-lg">M</div>
-    <span class="text-xl font-bold tracking-tight">MicroWind</span>
-  </div>
-  <div class="hidden sm:flex gap-6 text-sm font-medium text-gray-600">
-    <a href="#features" class="hover:text-blue transition-colors">Возможности</a>
-    <a href="#docs" class="hover:text-blue transition-colors">Документация</a>
-    <a href="#playground" class="hover:text-blue transition-colors">Песочница</a>
-  </div>
-  <button class="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors focus:ring-2 focus:ring-blue cursor-pointer">v1.0.0</button>
-</nav>
-
-<!-- Hero -->
-<header class="hero-gradient pt-32 pb-20 px-4 text-center relative overflow-hidden">
-  <div class="max-w-4xl mx-auto">
-    <span class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wide text-blue bg-blue/10 rounded-full uppercase">Open Source • Zero Build</span>
-    <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-6">CSS без магии.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue via-indigo to-violet">Только классы.</span></h1>
-    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">Утилитарная библиотека с короткими именами. Никакого JS, никаких конфликтов. Просто прописывайте классы в HTML и собирайте интерфейсы как LEGO.</p>
-
-    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-      <a href="#docs" class="bg-blue text-white px-8 py-3.5 rounded-xl font-semibold text-lg hover:bg-indigo transition-all hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">Начать изучение</a>
-      <a href="#playground" class="bg-white text-gray-800 border border-gray-200 px-8 py-3.5 rounded-xl font-semibold text-lg hover:border-blue hover:text-blue transition-all hover:shadow-lg cursor-pointer">Открыть песочницу</a>
-    </div>
-
-    <div class="code-block text-left max-w-xl mx-auto shadow-xl">
-      <code class="block text-sm">
-        <span class="text-pink">&lt;div</span> <span class="text-purple">class</span>=<span class="text-green">"flex justify-center items-center h-screen"</span><span class="text-pink">&gt;</span><br>
-        &nbsp;&nbsp;<span class="text-pink">&lt;h1</span> <span class="text-purple">class</span>=<span class="text-green">"text-4xl font-bold text-indigo hover:scale-105 transition cursor-pointer"</span><span class="text-pink">&gt;</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;Готово!<br>
-        &nbsp;&nbsp;<span class="text-pink">&lt;/h1&gt;</span><br>
-        <span class="text-pink">&lt;/div&gt;</span>
-      </code>
-    </div>
-  </div>
-</header>
-
-<!-- Фичи -->
-<section id="features" class="py-20 px-4 bg-gray-50">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Почему MicroWind?</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="feature-card bg-white p-8 rounded-2xl">
-        <div class="w-12 h-12 bg-blue/10 text-blue rounded-xl flex items-center justify-center text-2xl mb-4">⚡️</div>
-        <h3 class="text-xl font-bold mb-3">Нулевой оверхед</h3>
-        <p class="text-gray-600 leading-relaxed">Только чистый CSS. Без сборки, без препроцессоров, без зависимостей. Весит ~4KB gzip. Загружается мгновенно.</p>
-      </div>
-      <div class="feature-card bg-white p-8 rounded-2xl">
-        <div class="w-12 h-12 bg-indigo/10 text-indigo rounded-xl flex items-center justify-center text-2xl mb-4">🧩</div>
-        <h3 class="text-xl font-bold mb-3">Атомарная композиция</h3>
-        <p class="text-gray-600 leading-relaxed">Объединяйте `.flex .justify-center .gap-4 .p-8`. Каждый класс делает одно, предсказуемое действие.</p>
-      </div>
-      <div class="feature-card bg-white p-8 rounded-2xl">
-        <div class="w-12 h-12 bg-emerald/10 text-emerald rounded-xl flex items-center justify-center text-2xl mb-4">🎨</div>
-        <h3 class="text-xl font-bold mb-3">CSS-переменные</h3>
-        <p class="text-gray-600 leading-relaxed">Легко кастомизировать через `:root`. Меняйте палитру, радиусы, тени и отступы в 2 строки.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Документация -->
-<section id="docs" class="py-20 px-4">
-  <div class="max-w-5xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">📖 Документация</h2>
-
-    <!-- Layout -->
-    <div class="mb-16">
-      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-blue rounded-full"></span> Layout & Flex/Grid</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="border border-gray-200 rounded-xl p-5 bg-white">
-          <code class="text-sm text-indigo font-mono block mb-3">.flex .justify-between .items-center</code>
-          <div class="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
-            <div class="w-10 h-10 bg-blue rounded-lg"></div>
-            <div class="w-10 h-10 bg-red rounded-lg"></div>
+<body>
+  <div class="page-shell">
+    <nav class="nav-glass">
+      <div class="container flex items-center justify-between py-4">
+        <a href="#top" class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg" style="background: linear-gradient(135deg, #f97316, #0ea5e9);">M</div>
+          <div>
+            <div class="font-black text-xl tracking-tight">MicroWind CSS</div>
+            <div class="text-sm text-gray-500">utility-first without build step</div>
           </div>
-          <button class="copy-btn mt-3" data-code=".flex .justify-between .items-center">Копировать</button>
-        </div>
-        <div class="border border-gray-200 rounded-xl p-5 bg-white">
-          <code class="text-sm text-indigo font-mono block mb-3">.grid .grid-cols-3 .gap-4</code>
-          <div class="grid grid-cols-3 gap-4 p-3 bg-gray-100 rounded-lg">
-            <div class="bg-green h-12 rounded-lg"></div>
-            <div class="bg-yellow h-12 rounded-lg"></div>
-            <div class="bg-purple h-12 rounded-lg"></div>
-          </div>
-          <button class="copy-btn mt-3" data-code=".grid .grid-cols-3 .gap-4">Копировать</button>
-        </div>
-      </div>
-    </div>
+        </a>
 
-    <!-- Spacing -->
-    <div class="mb-16">
-      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-emerald rounded-full"></span> Spacing & Sizing</h3>
-      <div class="border border-gray-200 rounded-xl p-5 bg-white">
-        <code class="text-sm text-indigo font-mono block mb-3">.p-6 .px-4 .py-8 .mt-4 .mb-8 .gap-2</code>
-        <div class="p-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-          <div class="px-4 py-8 mt-4 mb-8 bg-white rounded-lg shadow-sm border">
-            <p class="text-center text-gray-500 text-sm">Внутренние/внешние отступы работают по системе 4px (1rem = 4)</p>
+        <div class="nav-links flex items-center gap-6 text-sm font-semibold text-gray-600">
+          <a href="#features" class="transition-colors hover:text-blue">Классы</a>
+          <a href="#docs" class="transition-colors hover:text-blue">Документация</a>
+          <a href="#download" class="transition-colors hover:text-blue">Подключение</a>
+          <a href="#playground" class="transition-colors hover:text-blue">Песочница</a>
+        </div>
+
+        <a href="microwind.css" download="microwind.css" class="mini-button">Скачать CSS</a>
+      </div>
+    </nav>
+
+    <header id="top" class="hero">
+      <div class="container">
+        <div class="eyebrow">
+          <span>v1.1</span>
+          <span>zero build</span>
+          <span></span>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <h1 class="hero-title">Собирай интерфейсы <span>из коротких классов</span></h1>
+            <p class="hero-subtitle">
+              MicroWind стал богаче по utility-набору: больше margin и padding-классов, фракционные размеры, hover/focus-состояния, простые градиенты,
+              `space-x`, `space-y`, позиционирование и готовые варианты для лендингов, карточек и UI-блоков.
+            </p>
+
+            <div class="button-row">
+              <a href="#download" class="hero-button">Подключить библиотеку</a>
+              <a href="#playground" class="ghost-button">Открыть live playground</a>
+            </div>
+
+            <div class="preview-stack mt-10">
+              <div class="stat-chip">120+ utility-классов для layout, spacing, colors и states</div>
+              <div class="stat-chip">Можно скачать файл или отдать его по HTTPS после деплоя</div>
+              <div class="stat-chip">Один CSS-файл, без сборки и без зависимостей</div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="signal-row">
+              <span class="signal-dot" style="background:#fb7185;"></span>
+              <span class="signal-dot" style="background:#fbbf24;"></span>
+              <span class="signal-dot" style="background:#4ade80;"></span>
+            </div>
+            <div class="code-panel">
+              <div>&lt;section class="flex flex-col gap-6 p-8 rounded-3xl bg-white shadow-lg"&gt;</div>
+              <div>&nbsp;&nbsp;&lt;div class="flex items-center justify-between mb-4"&gt;</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="bg-blue-10 text-blue px-3 py-1 rounded-full"&gt;new&lt;/span&gt;</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="border border-blue text-blue px-4 py-2 rounded-lg hover:bg-blue hover:text-white transition-colors"&gt;</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Запустить</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;</div>
+              <div>&nbsp;&nbsp;&lt;/div&gt;</div>
+              <div>&nbsp;&nbsp;&lt;h2 class="text-3xl font-black tracking-tight"&gt;MicroWind UI&lt;/h2&gt;</div>
+              <div>&nbsp;&nbsp;&lt;p class="text-gray-600 mt-3"&gt;Комбинируй классы и собирай компоненты прямо в HTML.&lt;/p&gt;</div>
+              <div>&lt;/section&gt;</div>
+            </div>
           </div>
         </div>
-        <button class="copy-btn mt-3" data-code=".p-6 .px-4 .py-8 .mt-4 .mb-8 .gap-2">Копировать</button>
       </div>
-    </div>
+    </header>
 
-    <!-- Typography & Colors -->
-    <div class="mb-16">
-      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-purple rounded-full"></span> Typography & Colors</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="border border-gray-200 rounded-xl p-5 bg-white">
-          <code class="text-sm text-indigo font-mono block mb-3">.text-3xl .font-bold .tracking-tight</code>
-          <div class="text-3xl font-bold tracking-tight p-4 bg-gray-50 rounded-lg">Заголовок</div>
-          <button class="copy-btn mt-3" data-code=".text-3xl .font-bold .tracking-tight">Копировать</button>
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-widest text-orange mb-2">Что стало лучше</div>
+            <h2 class="section-title">Больше полезных классов без потери простоты</h2>
+          </div>
+          <p class="section-text">
+            Библиотека осталась маленькой и понятной, но теперь удобнее покрывает реальные сценарии: карточки, hero-блоки, бейджи, кнопки, панели,
+            списки и базовые адаптивные секции.
+          </p>
         </div>
-        <div class="border border-gray-200 rounded-xl p-5 bg-white">
-          <code class="text-sm text-indigo font-mono block mb-3">.bg-indigo .text-white .p-4 .rounded-xl</code>
-          <button class="bg-indigo text-white p-4 rounded-xl w-full hover:opacity-90 transition cursor-pointer">Кнопка с фоном</button>
-          <button class="copy-btn mt-3" data-code=".bg-indigo .text-white .p-4 .rounded-xl">Копировать</button>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">↕</div>
+            <h3 class="text-2xl font-black tracking-tight mb-3">Spacing-system</h3>
+            <p>Добавлены более полные `m-*`, `mx-*`, `my-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, а также отрицательные отступы и `space-x / space-y` для списков и рядов.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">◫</div>
+            <h3 class="text-2xl font-black tracking-tight mb-3">Размеры и layout</h3>
+            <p>Теперь есть больше ширин и высот, фракционные значения вроде `w-1/2`, `w-3/4`, дополнительные `max-w-*`, позиционирование и расширенный grid/flex-набор.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">✦</div>
+            <h3 class="text-2xl font-black tracking-tight mb-3">States и декор</h3>
+            <p>Появились `transition-colors`, новые hover-варианты, фоновые soft-цвета, простые градиенты, `bg-clip-text`, анимация `animate-float` и улучшенные тени.</p>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Interactive -->
-    <div class="mb-8">
-      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="w-2 h-6 bg-amber rounded-full"></span> Transitions & Hover</h3>
-      <div class="border border-gray-200 rounded-xl p-5 bg-white">
-        <code class="text-sm text-indigo font-mono block mb-3">.hover-scale .transition-all .duration-200 .shadow-lg .hover:shadow-xl</code>
-        <div class="flex justify-center p-8 bg-gray-50 rounded-lg">
-          <div class="w-28 h-28 bg-gradient-to-br from-pink to-purple rounded-2xl shadow-lg hover-scale transition-all duration-200 hover:shadow-xl cursor-pointer flex items-center justify-center text-white font-bold text-2xl">✨</div>
+    <section id="docs">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-widest text-cyan mb-2">Документация</div>
+            <h2 class="section-title">Готовые комбинации классов</h2>
+          </div>
+          <p class="section-text">
+            Ниже не абстрактные названия, а реальные наборы utility-классов, которые можно сразу копировать в проект.
+          </p>
         </div>
-        <button class="copy-btn mt-3" data-code=".hover-scale .transition-all .duration-200 .shadow-lg .hover:shadow-xl">Копировать</button>
+
+        <div class="docs-grid">
+          <article class="docs-card">
+            <code>.flex .items-center .justify-between .gap-4 .p-6</code>
+            <p class="mt-4">Подходит для navbar, header-строк и тулбаров.</p>
+            <div class="demo-slab flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-blue"></div>
+                <div class="w-24 h-4 rounded-full bg-gray-300"></div>
+              </div>
+              <div class="w-16 h-10 rounded-xl bg-indigo"></div>
+            </div>
+            <button class="copy-btn" data-code=".flex .items-center .justify-between .gap-4 .p-6">Копировать</button>
+          </article>
+
+          <article class="docs-card">
+            <code>.space-y-4 .p-6 .rounded-2xl .bg-white .shadow</code>
+            <p class="mt-4">Удобно для карточек с вертикальным стеком элементов.</p>
+            <div class="demo-slab">
+              <div class="space-y-4">
+                <div class="h-4 w-1/2 rounded-full bg-gray-300"></div>
+                <div class="h-4 w-full rounded-full bg-gray-200"></div>
+                <div class="h-4 w-4/5 rounded-full bg-gray-200"></div>
+              </div>
+            </div>
+            <button class="copy-btn" data-code=".space-y-4 .p-6 .rounded-2xl .bg-white .shadow">Копировать</button>
+          </article>
+
+          <article class="docs-card">
+            <code>.mx-auto .max-w-4xl .px-6 .py-12 .grid .md:grid-cols-2</code>
+            <p class="mt-4">База для responsive hero или двухколоночной секции.</p>
+            <div class="demo-slab grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="h-24 rounded-2xl bg-orange"></div>
+              <div class="h-24 rounded-2xl bg-cyan"></div>
+            </div>
+            <button class="copy-btn" data-code=".mx-auto .max-w-4xl .px-6 .py-12 .grid .md:grid-cols-2">Копировать</button>
+          </article>
+
+          <article class="docs-card">
+            <code>.border .border-blue .text-blue .hover:bg-blue .hover:text-white</code>
+            <p class="mt-4">Outline-кнопки и secondary CTA без отдельного компонента.</p>
+            <div class="demo-slab flex items-center gap-4 flex-wrap">
+              <button class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">Outline</button>
+              <button class="bg-gray-900 text-white px-5 py-3 rounded-xl hover:opacity-90 transition cursor-pointer">Solid</button>
+            </div>
+            <button class="copy-btn" data-code=".border .border-blue .text-blue .hover:bg-blue .hover:text-white">Копировать</button>
+          </article>
+        </div>
       </div>
+    </section>
+
+    <section id="download">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-widest text-indigo mb-2">Подключение</div>
+            <h2 class="section-title">Скачать файл или подключить по HTTPS</h2>
+          </div>
+          <p class="section-text">
+            Для GitHub Pages нужен только деплой репозитория. После публикации этот же `microwind.css` будет доступен по прямой HTTPS-ссылке.
+          </p>
+        </div>
+
+        <div class="download-grid">
+          <article class="download-card">
+            <h3 class="text-2xl font-black tracking-tight mb-3">1. Скачать локально</h3>
+            <p>Скачай файл и положи рядом со своим HTML или в папку `assets/css`.</p>
+            <div class="install-box">&lt;link rel="stylesheet" href="./microwind.css"&gt;</div>
+            <div class="download-actions">
+              <a href="microwind.css" download="microwind.css" class="mini-button">Скачать `microwind.css`</a>
+              <button class="copy-btn alt" data-code='<link rel="stylesheet" href="./microwind.css">' >Копировать тег</button>
+            </div>
+          </article>
+
+          <article class="download-card">
+            <h3 class="text-2xl font-black tracking-tight mb-3">2. Подключить через GitHub Pages</h3>
+            <p>После деплоя используй прямую ссылку на CSS. На опубликованном сайте она сформируется автоматически.</p>
+            <div class="install-box" id="https-snippet">&lt;link rel="stylesheet" href="https://stepankislin.github.io/microwind/microwind.css"&gt;</div>
+            <span id="https-link" class="link-output">https://stepankislin.github.io/microwind/microwind.css</span>
+            <div class="download-actions">
+              <button id="copy-https-btn" class="copy-btn">Копировать HTTPS-тег</button>
+              <button id="copy-url-btn" class="copy-btn alt">Копировать только URL</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="playground">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-widest text-green mb-2">Песочница</div>
+            <h2 class="section-title">Пробуй новые utility-классы сразу на странице</h2>
+          </div>
+          <p class="section-text">
+            Редактируй HTML слева и смотри результат справа. Я обновил демо так, чтобы оно использовало новые spacing, colors, gradients и button-state утилиты.
+          </p>
+        </div>
+
+        <div class="playground-card">
+          <div class="editor-wrap">
+            <textarea id="code-input" class="editor" spellcheck="false">
+<div class="p-8 rounded-3xl bg-white shadow-lg space-y-6">
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <span class="bg-blue-10 text-blue px-3 py-1 rounded-full text-sm font-semibold">MicroWind</span>
+      <h2 class="text-3xl font-black tracking-tight mt-4">Обновлённый utility-набор</h2>
+      <p class="text-gray-600 mt-3 max-w-md">
+        Теперь удобнее собирать hero-секции, карточки, списки, кнопки и панели без кастомного CSS.
+      </p>
     </div>
+    <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float"></div>
   </div>
-</section>
 
-<!-- Песочница -->
-<section id="playground" class="py-20 px-4 bg-gray-50">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl md:text-4xl font-bold mb-3">🛠 Интерактивная песочница</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">Пишите HTML с классами MicroWind слева → видите результат справа мгновенно. Экспериментируйте без ограничений.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 space-y-3">
+      <div class="h-4 w-1/2 rounded-full bg-gray-300"></div>
+      <div class="h-4 w-full rounded-full bg-gray-200"></div>
+      <div class="h-4 w-4/5 rounded-full bg-gray-200"></div>
     </div>
 
-    <div class="editor-wrap shadow-xl rounded-2xl overflow-hidden bg-white border border-gray-200">
-        <textarea id="code-input" class="editor" spellcheck="false">
-<div class="flex flex-col items-center gap-6 p-10 bg-gradient-to-b from-white to-gray-50 h-full">
-  <div class="flex items-center gap-3 mb-4">
-    <div class="w-12 h-12 bg-blue rounded-xl flex items-center justify-center text-white text-2xl">⚡</div>
-    <h2 class="text-3xl font-bold text-gray-800">MicroWind Playground</h2>
-  </div>
-
-  <p class="text-center text-gray-600 max-w-md">
-    Это живая песочница. Меняйте классы, добавляйте блоки, экспериментируйте с сеткой и отступами.
-  </p>
-
-  <div class="flex flex-wrap justify-center gap-3 mt-2">
-    <button class="bg-green text-white px-5 py-2.5 rounded-lg font-medium hover:bg-emerald transition hover:scale-105 cursor-pointer">
-      Успех
-    </button>
-    <button class="bg-red text-white px-5 py-2.5 rounded-lg font-medium hover:bg-red/80 transition hover:scale-105 cursor-pointer">
-      Отмена
-    </button>
-    <button class="border-2 border-blue text-blue px-5 py-2.5 rounded-lg font-medium hover:bg-blue hover:text-white transition cursor-pointer">
-      Outline
-    </button>
-  </div>
-
-  <div class="mt-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm w-full max-w-sm">
-    <div class="flex justify-between items-center mb-2">
-      <span class="text-sm font-medium text-gray-700">Прогресс</span>
-      <span class="text-xs font-bold text-green bg-green/10 px-2 py-1 rounded">85%</span>
-    </div>
-    <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-      <div class="h-full bg-blue w-[85%] rounded-full"></div>
+    <div class="p-5 rounded-2xl bg-gradient-to-b from-white to-gray-50 border border-gray-200">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald flex items-center justify-center text-white font-bold">+</div>
+        <div>
+          <div class="font-bold text-gray-800">Новые состояния</div>
+          <div class="text-sm text-gray-500">hover, focus, opacity, transition-colors</div>
+        </div>
+      </div>
+      <button class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">
+        Попробовать
+      </button>
     </div>
   </div>
 </div></textarea>
-      <div id="live-preview" class="preview flex items-center justify-center">
-        <!-- Здесь рендерится результат -->
+
+            <div id="live-preview" class="preview"></div>
+          </div>
+          <p class="playground-note mt-4">Совет: попробуй заменить `space-y-6` на `space-y-2`, `rounded-3xl` на `rounded-lg` или `bg-blue-10` на `bg-emerald-10` и сразу увидишь разницу.</p>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <footer class="footer-note py-10">
+      <div class="container flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div class="font-bold text-gray-800">MicroWind CSS</div>
+          <div class="text-sm">Один файл. Быстрый старт. Utility-first подход без сборки.</div>
+        </div>
+        <div class="text-sm">MIT License • готово для GitHub Pages</div>
+      </div>
+    </footer>
   </div>
-</section>
 
-<footer class="text-center py-12 px-4 text-gray-500 text-sm border-t bg-white">
-  <p class="mb-2">© 2026 MicroWind CSS. Собрано вручную. Никаких зависимостей.</p>
-  <p class="text-xs text-gray-400">Лицензия MIT • Сделано для скорости и контроля</p>
-</footer>
+  <script>
+    const input = document.getElementById("code-input");
+    const preview = document.getElementById("live-preview");
+    const httpsLink = document.getElementById("https-link");
+    const httpsSnippet = document.getElementById("https-snippet");
+    const copyHttpsBtn = document.getElementById("copy-https-btn");
+    const copyUrlBtn = document.getElementById("copy-url-btn");
 
-<script>
-  // Живой предпросмотр
-  const input = document.getElementById('code-input');
-  const preview = document.getElementById('live-preview');
+    function updatePreview() {
+      preview.innerHTML = input.value;
+    }
 
-  function updatePreview() {
-    preview.innerHTML = input.value;
-  }
+    function resolveCssUrl() {
+      const { protocol, host, pathname } = window.location;
+      const isLocal =
+        host.includes("localhost") ||
+        host.includes("127.0.0.1") ||
+        protocol === "file:";
 
-  input.addEventListener('input', updatePreview);
-  updatePreview();
+      if (isLocal) {
+        return "https://stepankislin.github.io/microwind/microwind.css";
+      }
 
-  // Копирование кода
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const code = btn.getAttribute('data-code');
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = '✓ Скопировано';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = 'Копировать';
-          btn.classList.remove('copied');
-        }, 1500);
+      const pathParts = pathname.split("/").filter(Boolean);
+      if (host.endsWith("github.io") && pathParts.length > 0) {
+        return `${protocol}//${host}/${pathParts[0]}/microwind.css`;
+      }
+
+      return `${protocol}//${host}/microwind.css`;
+    }
+
+    function updateHttpsBlock() {
+      const url = resolveCssUrl();
+      const linkTag = `<link rel="stylesheet" href="${url}">`;
+      httpsLink.textContent = url;
+      httpsSnippet.textContent = linkTag;
+      copyHttpsBtn.dataset.code = linkTag;
+      copyUrlBtn.dataset.code = url;
+    }
+
+    function attachCopy(button) {
+      button.addEventListener("click", async () => {
+        const code = button.dataset.code || "";
+        try {
+          await navigator.clipboard.writeText(code);
+          const original = button.textContent;
+          button.textContent = "Скопировано";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove("copied");
+          }, 1400);
+        } catch (error) {
+          console.error("Copy failed", error);
+        }
+      });
+    }
+
+    updatePreview();
+    updateHttpsBlock();
+
+    input.addEventListener("input", updatePreview);
+
+    document.querySelectorAll(".copy-btn").forEach(attachCopy);
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.querySelector(anchor.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
       });
     });
-  });
-
-  // Плавный скролл для якорей
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
