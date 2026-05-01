@@ -348,6 +348,91 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1rem;
+    }
+
+    .showcase-panel,
+    .showcase-stage {
+      border-radius: 26px;
+      padding: 1.5rem;
+      background: var(--page-panel);
+      border: 1px solid var(--page-line);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 24px 70px -48px rgba(15, 23, 42, 0.35);
+    }
+
+    .showcase-stage {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 32%),
+        rgba(255, 255, 255, 0.72);
+    }
+
+    .demo-switches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .demo-chip {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      background: rgba(255, 255, 255, 0.78);
+      color: #0f172a;
+      border-radius: 9999px;
+      padding: 0.72rem 0.95rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .demo-chip:hover {
+      transform: translateY(-2px);
+    }
+
+    .demo-chip.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+
+    .demo-console {
+      margin-top: 1rem;
+      border-radius: 20px;
+      background: #101827;
+      color: #dce7f9;
+      padding: 1rem;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .demo-card {
+      width: min(100%, 420px);
+      transition: all 0.28s ease;
+    }
+
+    .hero-orbit {
+      position: absolute;
+      inset: auto auto 30px 58%;
+      display: flex;
+      gap: 0.8rem;
+      z-index: 1;
+    }
+
+    .hero-orbit span {
+      display: block;
+      border-radius: 9999px;
+      opacity: 0.82;
+    }
+
     .install-box {
       margin-top: 1rem;
       border-radius: 18px;
@@ -435,6 +520,7 @@
       .features-grid,
       .docs-grid,
       .download-grid,
+      .showcase-grid,
       .editor-wrap {
         grid-template-columns: 1fr;
       }
@@ -482,7 +568,7 @@
 
         <div class="nav-links flex items-center gap-6 text-sm font-semibold text-gray-600">
           <a href="#features" class="transition-colors hover:text-blue">Классы</a>
-          <a href="#docs" class="transition-colors hover:text-blue">Документация</a>
+          <a href="docs.html" class="transition-colors hover:text-blue">Документация</a>
           <a href="#download" class="transition-colors hover:text-blue">Подключение</a>
           <a href="#playground" class="transition-colors hover:text-blue">Песочница</a>
         </div>
@@ -496,7 +582,7 @@
         <div class="eyebrow">
           <span>v1.1</span>
           <span>zero build</span>
-          <span></span>
+          <span>docs portal</span>
         </div>
 
         <div class="hero-grid">
@@ -509,7 +595,7 @@
 
             <div class="button-row">
               <a href="#download" class="hero-button">Подключить библиотеку</a>
-              <a href="#playground" class="ghost-button">Открыть live playground</a>
+              <a href="docs.html" class="ghost-button">Открыть docs.html</a>
             </div>
 
             <div class="preview-stack mt-10">
@@ -538,6 +624,11 @@
               <div>&lt;/section&gt;</div>
             </div>
           </div>
+        </div>
+        <div class="hero-orbit pointer-events-none">
+          <span class="w-6 h-6 bg-blue rounded-full animate-pulse"></span>
+          <span class="w-10 h-10 bg-orange rounded-full animate-float"></span>
+          <span class="w-4 h-4 bg-emerald rounded-full animate-pulse"></span>
         </div>
       </div>
     </header>
@@ -582,11 +673,21 @@
         <div class="section-head">
           <div>
             <div class="text-sm font-bold uppercase tracking-widest text-cyan mb-2">Документация</div>
-            <h2 class="section-title">Готовые комбинации классов</h2>
+            <h2 class="section-title">Отдельный docs-портал и быстрые сниппеты</h2>
           </div>
           <p class="section-text">
-            Ниже не абстрактные названия, а реальные наборы utility-классов, которые можно сразу копировать в проект.
+            Теперь у библиотеки есть отдельный файл `docs.html` в стиле полноценной документации. А ниже оставил быстрые сниппеты для быстрого старта прямо с landing.
           </p>
+        </div>
+
+        <div class="download-card mb-8">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 class="text-2xl font-black tracking-tight mb-2">Новая страница `docs.html`</h3>
+              <p>Внутри есть боковая навигация, секции по spacing/layout/colors/states/motion, таблицы reference и интерактивные демо.</p>
+            </div>
+            <a href="docs.html" class="mini-button">Открыть документацию</a>
+          </div>
         </div>
 
         <div class="docs-grid">
@@ -635,6 +736,61 @@
             </div>
             <button class="copy-btn" data-code=".border .border-blue .text-blue .hover:bg-blue .hover:text-white">Копировать</button>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="showcase">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-widest text-pink mb-2">Interactive showcase</div>
+            <h2 class="section-title">Живые motion и state-демо</h2>
+          </div>
+          <p class="section-text">
+            Этот блок не просто рассказывает о классах, а переключает реальные utility-комбинации на одном компоненте: анимации, фоны, состояния, тени и кнопки.
+          </p>
+        </div>
+
+        <div class="showcase-grid">
+          <div class="showcase-panel">
+            <h3 class="text-2xl font-black tracking-tight mb-3">Utility State Switcher</h3>
+            <p>Выбери режим, и демонстрационная карточка справа сменит utility-набор без отдельного component CSS.</p>
+
+            <div class="demo-switches">
+              <button class="demo-chip active" data-mode="default">Default</button>
+              <button class="demo-chip" data-mode="motion">Motion</button>
+              <button class="demo-chip" data-mode="success">Success</button>
+            </div>
+
+            <div id="demo-console" class="demo-console">
+              .bg-white .shadow-lg .border .border-blue .text-blue .hover:bg-blue
+            </div>
+          </div>
+
+          <div class="showcase-stage">
+            <div id="demo-card" class="demo-card p-8 rounded-3xl bg-white shadow-lg space-y-5">
+              <div class="flex items-center justify-between gap-4">
+                <span id="demo-badge" class="bg-blue-10 text-blue px-3 py-1 rounded-full text-sm font-semibold">Default</span>
+                <div id="demo-orb" class="w-16 h-16 rounded-3xl bg-gradient-to-br from-pink to-purple shadow-lg"></div>
+              </div>
+
+              <div class="space-y-3">
+                <h3 class="text-3xl font-black tracking-tight">MicroWind Demo Card</h3>
+                <p class="text-gray-600">Одна карточка, несколько состояний, всё управляется utility-классами.</p>
+              </div>
+
+              <div class="space-y-2">
+                <div class="h-3 w-1/2 rounded-full bg-gray-300"></div>
+                <div class="h-3 w-full rounded-full bg-gray-200"></div>
+                <div class="h-3 w-4/5 rounded-full bg-gray-200"></div>
+              </div>
+
+              <button id="demo-button" class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">
+                Trigger utility state
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -750,6 +906,11 @@
     const httpsSnippet = document.getElementById("https-snippet");
     const copyHttpsBtn = document.getElementById("copy-https-btn");
     const copyUrlBtn = document.getElementById("copy-url-btn");
+    const demoConsole = document.getElementById("demo-console");
+    const demoCard = document.getElementById("demo-card");
+    const demoBadge = document.getElementById("demo-badge");
+    const demoOrb = document.getElementById("demo-orb");
+    const demoButton = document.getElementById("demo-button");
 
     function updatePreview() {
       preview.innerHTML = input.value;
@@ -801,12 +962,54 @@
       });
     }
 
+    function setShowcaseMode(mode) {
+      demoCard.className = "demo-card p-8 rounded-3xl space-y-5 transition-all";
+      demoBadge.className = "px-3 py-1 rounded-full text-sm font-semibold";
+      demoOrb.className = "w-16 h-16 rounded-3xl shadow-lg";
+      demoButton.className = "px-5 py-3 rounded-xl transition-all cursor-pointer";
+
+      if (mode === "motion") {
+        demoCard.classList.add("bg-white", "shadow-xl", "border", "border-purple");
+        demoBadge.classList.add("bg-indigo-10", "text-indigo");
+        demoBadge.textContent = "Motion";
+        demoOrb.classList.add("bg-gradient-to-br", "from-pink", "to-purple", "animate-float");
+        demoButton.classList.add("bg-indigo", "text-white", "hover:opacity-90");
+        demoConsole.textContent = ".border-purple .shadow-xl .bg-indigo .animate-float .hover:opacity-90";
+        return;
+      }
+
+      if (mode === "success") {
+        demoCard.classList.add("bg-white", "shadow-lg", "border", "border-green");
+        demoBadge.classList.add("bg-emerald-10", "text-emerald");
+        demoBadge.textContent = "Success";
+        demoOrb.classList.add("bg-emerald", "animate-pulse");
+        demoButton.classList.add("bg-green", "text-white", "hover:bg-emerald");
+        demoConsole.textContent = ".border-green .bg-emerald-10 .bg-green .hover:bg-emerald .animate-pulse";
+        return;
+      }
+
+      demoCard.classList.add("bg-white", "shadow-lg");
+      demoBadge.classList.add("bg-blue-10", "text-blue");
+      demoBadge.textContent = "Default";
+      demoOrb.classList.add("bg-gradient-to-br", "from-pink", "to-purple");
+      demoButton.classList.add("border", "border-blue", "text-blue", "hover:bg-blue", "hover:text-white");
+      demoConsole.textContent = ".bg-white .shadow-lg .border .border-blue .text-blue .hover:bg-blue";
+    }
+
     updatePreview();
     updateHttpsBlock();
+    setShowcaseMode("default");
 
     input.addEventListener("input", updatePreview);
 
     document.querySelectorAll(".copy-btn").forEach(attachCopy);
+    document.querySelectorAll(".demo-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".demo-chip").forEach((item) => item.classList.remove("active"));
+        chip.classList.add("active");
+        setShowcaseMode(chip.dataset.mode);
+      });
+    });
 
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", (event) => {

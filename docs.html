@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroWind Docs — Utility-first документация</title>
+  <meta name="description" content="Документация MicroWind CSS: установка, spacing, layout, colors, states, motion, responsive utilities и готовые паттерны.">
+  <link rel="stylesheet" href="microwind.css">
+  <style>
+    :root {
+      --docs-bg: #f6f7fb;
+      --docs-panel: rgba(255, 255, 255, 0.8);
+      --docs-border: rgba(148, 163, 184, 0.22);
+      --docs-text: #0f172a;
+      --docs-muted: #64748b;
+      --docs-brand-a: #0ea5e9;
+      --docs-brand-b: #f97316;
+      --docs-brand-c: #8b5cf6;
+      --docs-code: #0f172a;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.14), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, var(--docs-bg) 48%, #eef2ff 100%);
+      color: var(--docs-text);
+    }
+
+    .docs-shell {
+      min-height: 100vh;
+    }
+
+    .docs-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.76);
+      border-bottom: 1px solid var(--docs-border);
+    }
+
+    .docs-container {
+      width: min(1380px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .docs-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .docs-mark {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--docs-brand-a), var(--docs-brand-b), var(--docs-brand-c));
+      box-shadow: 0 18px 34px -18px rgba(14, 165, 233, 0.55);
+    }
+
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr) 230px;
+      gap: 1.5rem;
+      padding: 1.5rem 0 3rem;
+      align-items: start;
+    }
+
+    .docs-sidebar,
+    .docs-toc,
+    .docs-hero,
+    .docs-card,
+    .docs-demo,
+    .docs-table-wrap,
+    .docs-callout {
+      background: var(--docs-panel);
+      border: 1px solid var(--docs-border);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px -48px rgba(15, 23, 42, 0.32);
+    }
+
+    .docs-sidebar,
+    .docs-toc {
+      position: sticky;
+      top: 88px;
+      border-radius: 24px;
+      padding: 1rem;
+      max-height: calc(100vh - 108px);
+      overflow: auto;
+    }
+
+    .docs-main {
+      min-width: 0;
+    }
+
+    .docs-hero {
+      border-radius: 28px;
+      padding: 1.6rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .docs-hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    .docs-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(14, 165, 233, 0.08);
+      color: #0369a1;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .docs-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .docs-hero h1 span {
+      background: linear-gradient(90deg, var(--docs-brand-a), var(--docs-brand-c), var(--docs-brand-b));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .docs-hero p,
+    .docs-card p,
+    .docs-demo p,
+    .docs-callout p,
+    .docs-table-wrap p {
+      color: var(--docs-muted);
+      line-height: 1.78;
+    }
+
+    .docs-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .docs-btn,
+    .copy-btn,
+    .demo-toggle {
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .docs-btn:hover,
+    .copy-btn:hover,
+    .demo-toggle:hover {
+      transform: translateY(-2px);
+    }
+
+    .docs-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.2rem;
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .docs-btn.alt {
+      background: #fff;
+      color: #0f172a;
+      border: 1px solid var(--docs-border);
+    }
+
+    .docs-nav-title,
+    .docs-toc-title {
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--docs-muted);
+      margin-bottom: 0.85rem;
+      font-weight: 800;
+    }
+
+    .docs-nav-group + .docs-nav-group {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .docs-nav-group strong {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-size: 0.98rem;
+    }
+
+    .docs-nav-group a,
+    .docs-toc a {
+      display: block;
+      padding: 0.45rem 0.65rem;
+      border-radius: 12px;
+      color: var(--docs-muted);
+      font-size: 0.95rem;
+    }
+
+    .docs-nav-group a:hover,
+    .docs-toc a:hover,
+    .docs-nav-group a.active,
+    .docs-toc a.active {
+      background: rgba(14, 165, 233, 0.08);
+      color: #0f172a;
+    }
+
+    .docs-section {
+      margin-top: 1.5rem;
+    }
+
+    .docs-section h2 {
+      font-size: clamp(1.9rem, 3vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.8rem;
+    }
+
+    .docs-section h3 {
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .docs-card,
+    .docs-demo,
+    .docs-table-wrap,
+    .docs-callout {
+      border-radius: 24px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .docs-demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .docs-demo-stage {
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.92));
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      padding: 1rem;
+      margin-top: 0.9rem;
+    }
+
+    .code-block {
+      background: var(--docs-code);
+      color: #d8e6ff;
+      border-radius: 20px;
+      padding: 1rem;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92rem;
+      line-height: 1.75;
+      overflow-x: auto;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .copy-btn {
+      padding: 0.7rem 0.95rem;
+      background: #0f172a;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+
+    .copy-btn.copied {
+      background: #059669;
+    }
+
+    .docs-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      margin-top: 1rem;
+    }
+
+    .docs-table th,
+    .docs-table td {
+      text-align: left;
+      padding: 0.85rem 0.9rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      vertical-align: top;
+    }
+
+    .docs-table th {
+      font-size: 0.84rem;
+      color: var(--docs-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .token {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.45rem;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.06);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9rem;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .swatch {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: #fff;
+    }
+
+    .swatch-color {
+      height: 92px;
+    }
+
+    .swatch-meta {
+      padding: 0.85rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .callout-warning {
+      border-color: rgba(249, 115, 22, 0.28);
+      background: rgba(255, 247, 237, 0.85);
+    }
+
+    .pattern-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .pattern-item {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .demo-toggle {
+      padding: 0.72rem 0.95rem;
+      background: rgba(255, 255, 255, 0.88);
+      color: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      font-size: 0.9rem;
+    }
+
+    .demo-toggle.active {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #047857;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    .footer {
+      padding: 2.5rem 0 3rem;
+      color: var(--docs-muted);
+    }
+
+    @media (max-width: 1180px) {
+      .docs-layout {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .docs-toc {
+        display: none;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .docs-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .docs-sidebar {
+        position: static;
+        max-height: none;
+      }
+
+      .docs-grid,
+      .swatch-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .docs-actions {
+        flex-direction: column;
+      }
+
+      .docs-btn,
+      .copy-btn,
+      .demo-toggle {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-shell">
+    <header class="docs-topbar">
+      <div class="docs-container flex items-center justify-between py-4 gap-4 flex-wrap">
+        <a href="index.html" class="docs-brand">
+          <span class="docs-mark">M</span>
+          <span>
+            <span class="block text-xl">MicroWind Docs</span>
+            <span class="block text-sm text-gray-500 font-medium">utility-first reference</span>
+          </span>
+        </a>
+
+        <div class="flex items-center gap-3 flex-wrap">
+          <a href="index.html" class="docs-btn alt">На главную</a>
+          <a href="microwind.css" download="microwind.css" class="docs-btn">Скачать CSS</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-container docs-layout">
+      <aside class="docs-sidebar">
+        <div class="docs-nav-title">Browse docs</div>
+
+        <div class="docs-nav-group">
+          <strong>Getting started</strong>
+          <a href="#introduction">Introduction</a>
+          <a href="#install">Install</a>
+          <a href="#principles">Principles</a>
+        </div>
+
+        <div class="docs-nav-group">
+          <strong>Utilities</strong>
+          <a href="#spacing">Spacing</a>
+          <a href="#layout">Layout</a>
+          <a href="#colors">Colors</a>
+          <a href="#motion">Motion</a>
+          <a href="#states">States</a>
+          <a href="#responsive">Responsive</a>
+        </div>
+
+        <div class="docs-nav-group">
+          <strong>Patterns</strong>
+          <a href="#recipes">Recipes</a>
+          <a href="#playground-docs">Live examples</a>
+          <a href="#reference">Reference table</a>
+        </div>
+      </aside>
+
+      <main class="docs-main">
+        <section class="docs-hero" id="introduction">
+          <div class="docs-kicker">
+            <span>v1.1</span>
+            <span>docs portal</span>
+            <span>github pages ready</span>
+          </div>
+          <h1>Документация <span>MicroWind CSS</span></h1>
+          <p>
+            Отдельная docs-страница по принципу Bootstrap: боковая навигация, оглавление, примеры, таблицы и живые демо для utility-классов.
+            Здесь можно быстро понять философию библиотеки, найти нужный класс и скопировать готовый паттерн.
+          </p>
+          <div class="docs-actions">
+            <a href="#install" class="docs-btn">Быстрый старт</a>
+            <a href="#reference" class="docs-btn alt">Смотреть reference</a>
+          </div>
+        </section>
+
+        <section class="docs-section" id="install">
+          <h2>Install</h2>
+          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <div class="status-badge mb-4">Local file</div>
+              <h3>Локальное подключение</h3>
+              <p>Подходит для статических сайтов, прототипов, лендингов и HTML-макетов.</p>
+              <div class="code-block mt-4">&lt;link rel="stylesheet" href="./microwind.css"&gt;</div>
+              <button class="copy-btn mt-4" data-code='<link rel="stylesheet" href="./microwind.css">'>Копировать</button>
+            </article>
+
+            <article class="docs-card">
+              <div class="status-badge mb-4">HTTPS</div>
+              <h3>Подключение через GitHub Pages</h3>
+              <p>После деплоя CSS можно использовать как внешний ресурс по HTTPS.</p>
+              <div class="code-block mt-4" id="docs-https-snippet">&lt;link rel="stylesheet" href="https://stepankislin.github.io/microwind/microwind.css"&gt;</div>
+              <button class="copy-btn mt-4" id="docs-copy-https">Копировать</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="principles">
+          <h2>Principles</h2>
+          <div class="docs-callout callout-warning">
+            <p><strong>Идея библиотеки:</strong> каждый класс делает одно предсказуемое действие. Вместо написания кастомных компонентов ты собираешь интерфейс из коротких utility-слоёв.</p>
+          </div>
+
+          <div class="pattern-list">
+            <div class="pattern-item"><strong>Atomic composition.</strong> Комбинируй `.flex`, `.gap-4`, `.p-6`, `.rounded-2xl`, `.shadow` и получай готовый блок.</div>
+            <div class="pattern-item"><strong>Zero build.</strong> Всё работает как обычный CSS-файл, без npm, PostCSS, Sass или bundler.</div>
+            <div class="pattern-item"><strong>Readable naming.</strong> Имена классов близки к привычным utility-framework паттернам и легко читаются прямо в HTML.</div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="spacing">
+          <h2>Spacing</h2>
+          <p>В `v1.1` spacing-система стала заметно полнее: теперь удобно контролировать и внутренние, и внешние отступы, а также интервалы между соседними элементами.</p>
+
+          <div class="docs-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>Padding, Margin, Space</h3>
+                <p>Ниже показаны основные группы spacing-классов.</p>
+              </div>
+              <button class="copy-btn" data-code=".p-6 .px-8 .py-4 .mt-4 .mx-auto .space-y-4">Копировать набор</button>
+            </div>
+
+            <div class="docs-table-wrap">
+              <div class="docs-table-wrap">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Group</th>
+                      <th>Examples</th>
+                      <th>Use case</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="token">p-*</span></td>
+                      <td><span class="token">p-4</span> <span class="token">px-6</span> <span class="token">py-8</span></td>
+                      <td>Внутренние отступы карточек, контейнеров, кнопок</td>
+                    </tr>
+                    <tr>
+                      <td><span class="token">m-*</span></td>
+                      <td><span class="token">mt-4</span> <span class="token">mb-8</span> <span class="token">mx-auto</span></td>
+                      <td>Вертикальные отступы между секциями и центровка блоков</td>
+                    </tr>
+                    <tr>
+                      <td><span class="token">space-*</span></td>
+                      <td><span class="token">space-y-4</span> <span class="token">space-x-2</span></td>
+                      <td>Быстрый ритм внутри списков и горизонтальных рядов</td>
+                    </tr>
+                    <tr>
+                      <td><span class="token">-m*</span></td>
+                      <td><span class="token">-mt-4</span> <span class="token">-ml-2</span></td>
+                      <td>Небольшие перекрытия, декоративные смещения, badge-overlap</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="docs-demo-stage">
+              <div class="p-6 rounded-3xl bg-white shadow space-y-4 max-w-md">
+                <div class="bg-blue-10 text-blue px-3 py-1 rounded-full inline-block text-sm font-semibold">Spacing demo</div>
+                <div class="space-y-2">
+                  <div class="h-4 w-1/2 rounded-full bg-gray-300"></div>
+                  <div class="h-4 w-full rounded-full bg-gray-200"></div>
+                  <div class="h-4 w-4/5 rounded-full bg-gray-200"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="layout">
+          <h2>Layout</h2>
+          <p>Библиотека покрывает типовые layout-сценарии: flex, grid, widths, heights, alignment и container-like ограничения через `max-w-*`.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Flex row</h3>
+              <div class="code-block mt-4">&lt;div class="flex items-center justify-between gap-4"&gt;...&lt;/div&gt;</div>
+              <div class="docs-demo-stage">
+                <div class="flex items-center justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-cyan"></div>
+                    <div class="w-24 h-4 rounded-full bg-gray-300"></div>
+                  </div>
+                  <div class="w-20 h-10 rounded-xl bg-orange"></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Grid columns</h3>
+              <div class="code-block mt-4">&lt;div class="grid grid-cols-3 gap-4"&gt;...&lt;/div&gt;</div>
+              <div class="docs-demo-stage">
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="h-20 rounded-2xl bg-blue"></div>
+                  <div class="h-20 rounded-2xl bg-indigo"></div>
+                  <div class="h-20 rounded-2xl bg-purple"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="colors">
+          <h2>Colors</h2>
+          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. Для мягких UI-акцентов доступны специальные варианты вроде `bg-blue-10` и `bg-emerald-10`.</p>
+
+          <div class="swatch-grid">
+            <article class="swatch">
+              <div class="swatch-color bg-blue"></div>
+              <div class="swatch-meta"><strong>Blue</strong><br><span class="token">.bg-blue</span> <span class="token">.text-blue</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-indigo"></div>
+              <div class="swatch-meta"><strong>Indigo</strong><br><span class="token">.bg-indigo</span> <span class="token">.text-indigo</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-emerald"></div>
+              <div class="swatch-meta"><strong>Emerald</strong><br><span class="token">.bg-emerald</span> <span class="token">.text-emerald</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-orange"></div>
+              <div class="swatch-meta"><strong>Orange</strong><br><span class="token">.bg-orange</span> <span class="token">.text-orange</span></div>
+            </article>
+          </div>
+
+          <div class="docs-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>Soft colors and gradients</h3>
+                <p>Эти utility-классы особенно хорошо работают в бейджах, hero-блоках и карточках.</p>
+              </div>
+              <button class="copy-btn" data-code=".bg-blue-10 .text-blue .bg-gradient-to-br .from-pink .to-purple">Копировать</button>
+            </div>
+            <div class="docs-demo-stage flex flex-wrap gap-4 items-center">
+              <span class="bg-blue-10 text-blue px-4 py-2 rounded-full font-semibold">Soft accent</span>
+              <span class="bg-emerald-10 text-emerald px-4 py-2 rounded-full font-semibold">Success tone</span>
+              <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="motion">
+          <h2>Motion</h2>
+          <p>MicroWind уже содержит несколько простых motion-утилит: hover-scale, hover-grow, hover-shrink, hover-translate-y, animate-pulse, animate-spin и animate-float.</p>
+
+          <div class="docs-demo" id="motion-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>Interactive motion lab</h3>
+                <p>Нажми на кнопку и посмотри, как демонстрационный блок меняет набор utility-классов.</p>
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <button class="demo-toggle active" data-demo="float">Float</button>
+                <button class="demo-toggle" data-demo="pulse">Pulse</button>
+                <button class="demo-toggle" data-demo="spin">Spin</button>
+              </div>
+            </div>
+            <div class="docs-demo-stage flex justify-center">
+              <div id="motion-target" class="w-32 h-32 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float shadow-xl"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="states">
+          <h2>States</h2>
+          <p>Состояния помогают быстрее собирать живые интерфейсы: наведение, фокус, активные нажатия, смена прозрачности, цвета и тени.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Buttons</h3>
+              <div class="docs-demo-stage flex gap-4 flex-wrap">
+                <button class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">Hover fill</button>
+                <button class="bg-gray-900 text-white px-5 py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all cursor-pointer">Active press</button>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Focus states</h3>
+              <div class="docs-demo-stage">
+                <input class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue" value="Попробуй сфокусировать меня">
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="responsive">
+          <h2>Responsive</h2>
+          <p>В библиотеке есть набор `sm:*`, `md:*`, `lg:*` модификаторов для layout, spacing и typography. Этого достаточно, чтобы без отдельного CSS делать адаптивные секции и сетки.</p>
+
+          <div class="docs-card">
+            <h3>Пример responsive-шаблона</h3>
+            <div class="code-block mt-4">&lt;section class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 md:px-12 py-8"&gt;...&lt;/section&gt;</div>
+            <div class="docs-demo-stage">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-6 rounded-2xl bg-white shadow">Колонка 1</div>
+                <div class="p-6 rounded-2xl bg-white shadow">Колонка 2</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="recipes">
+          <h2>Recipes</h2>
+          <p>Ниже несколько готовых комбинаций, которые удобно использовать как стартовые паттерны.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Feature card</h3>
+              <div class="code-block mt-4">.p-6 .rounded-3xl .bg-white .shadow-lg .space-y-4</div>
+            </article>
+            <article class="docs-card">
+              <h3>Hero section</h3>
+              <div class="code-block mt-4">.max-w-4xl .mx-auto .px-6 .py-12 .grid .md:grid-cols-2 .gap-6</div>
+            </article>
+            <article class="docs-card">
+              <h3>Primary button</h3>
+              <div class="code-block mt-4">.bg-blue .text-white .px-5 .py-3 .rounded-xl .hover:opacity-90 .transition</div>
+            </article>
+            <article class="docs-card">
+              <h3>Outline button</h3>
+              <div class="code-block mt-4">.border .border-blue .text-blue .hover:bg-blue .hover:text-white .transition-colors</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="playground-docs">
+          <h2>Live examples</h2>
+          <p>Эта секция показывает, что библиотека подходит не только для статичных блоков, но и для маленьких интерактивных сценариев.</p>
+
+          <div class="docs-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>State switcher</h3>
+                <p>Меняй состояние карточки и смотри, как utility-классы меняют внешний вид.</p>
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <button class="demo-toggle active" data-card-state="default">Default</button>
+                <button class="demo-toggle" data-card-state="accent">Accent</button>
+                <button class="demo-toggle" data-card-state="success">Success</button>
+              </div>
+            </div>
+            <div class="docs-demo-stage">
+              <div id="state-card" class="p-6 rounded-3xl bg-white shadow-lg transition-all space-y-4 max-w-md">
+                <span id="state-badge" class="bg-blue-10 text-blue px-3 py-1 rounded-full inline-block text-sm font-semibold">Default</span>
+                <h3 class="text-2xl font-black tracking-tight">Utility card</h3>
+                <p class="text-gray-600">Один и тот же блок может менять атмосферу только за счёт utility-классов.</p>
+                <button id="state-button" class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">Action</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="reference">
+          <h2>Reference table</h2>
+          <p>Короткий обзор того, какие категории уже есть в библиотеке и для чего они используются.</p>
+
+          <div class="docs-table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Examples</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Display</td>
+                  <td><span class="token">.flex</span> <span class="token">.grid</span> <span class="token">.hidden</span></td>
+                  <td>Базовые display-режимы и layout-контейнеры</td>
+                </tr>
+                <tr>
+                  <td>Spacing</td>
+                  <td><span class="token">.p-6</span> <span class="token">.mt-4</span> <span class="token">.space-y-4</span></td>
+                  <td>Отступы внутри и снаружи, интервалы между соседями</td>
+                </tr>
+                <tr>
+                  <td>Sizing</td>
+                  <td><span class="token">.w-full</span> <span class="token">.w-1/2</span> <span class="token">.max-w-4xl</span></td>
+                  <td>Ширины, высоты, ограничение контента</td>
+                </tr>
+                <tr>
+                  <td>Typography</td>
+                  <td><span class="token">.text-3xl</span> <span class="token">.font-black</span> <span class="token">.tracking-tight</span></td>
+                  <td>Размеры текста, насыщенность, ритм и выравнивание</td>
+                </tr>
+                <tr>
+                  <td>Colors</td>
+                  <td><span class="token">.bg-blue</span> <span class="token">.text-gray-600</span> <span class="token">.border-emerald</span></td>
+                  <td>Основные цвета интерфейса и soft-variants</td>
+                </tr>
+                <tr>
+                  <td>Motion</td>
+                  <td><span class="token">.animate-float</span> <span class="token">.hover-scale</span> <span class="token">.transition-colors</span></td>
+                  <td>Простая живая анимация и переходы без JS</td>
+                </tr>
+                <tr>
+                  <td>States</td>
+                  <td><span class="token">.hover:bg-blue</span> <span class="token">.focus:ring-2</span> <span class="token">.active:scale-95</span></td>
+                  <td>Интерактивные состояния контролов и ссылок</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <aside class="docs-toc">
+        <div class="docs-toc-title">On this page</div>
+        <a href="#introduction">Introduction</a>
+        <a href="#install">Install</a>
+        <a href="#principles">Principles</a>
+        <a href="#spacing">Spacing</a>
+        <a href="#layout">Layout</a>
+        <a href="#colors">Colors</a>
+        <a href="#motion">Motion</a>
+        <a href="#states">States</a>
+        <a href="#responsive">Responsive</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#playground-docs">Live examples</a>
+        <a href="#reference">Reference table</a>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      <div class="docs-container flex items-center justify-between gap-4 flex-wrap">
+        <div>MicroWind Docs • utility-first CSS without build step</div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <a href="index.html" class="text-blue">Landing</a>
+          <a href="microwind.css" class="text-blue">CSS file</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const copyButtons = document.querySelectorAll(".copy-btn");
+    const docsHttpsSnippet = document.getElementById("docs-https-snippet");
+    const docsCopyHttps = document.getElementById("docs-copy-https");
+    const motionTarget = document.getElementById("motion-target");
+    const stateCard = document.getElementById("state-card");
+    const stateBadge = document.getElementById("state-badge");
+    const stateButton = document.getElementById("state-button");
+    const sidebarLinks = document.querySelectorAll(".docs-sidebar a, .docs-toc a");
+    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "colors", "motion", "states", "responsive", "recipes", "playground-docs", "reference"];
+
+    function resolveCssUrl() {
+      const { protocol, host, pathname } = window.location;
+      const isLocal = host.includes("localhost") || host.includes("127.0.0.1") || protocol === "file:";
+
+      if (isLocal) {
+        return "https://stepankislin.github.io/microwind/microwind.css";
+      }
+
+      const pathParts = pathname.split("/").filter(Boolean);
+      if (host.endsWith("github.io") && pathParts.length > 0) {
+        return `${protocol}//${host}/${pathParts[0]}/microwind.css`;
+      }
+
+      return `${protocol}//${host}/microwind.css`;
+    }
+
+    function attachCopy(button) {
+      button.addEventListener("click", async () => {
+        const code = button.dataset.code || "";
+        try {
+          await navigator.clipboard.writeText(code);
+          const original = button.textContent;
+          button.textContent = "Скопировано";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove("copied");
+          }, 1400);
+        } catch (error) {
+          console.error("Copy failed", error);
+        }
+      });
+    }
+
+    function updateHttpsSnippet() {
+      const linkTag = `<link rel="stylesheet" href="${resolveCssUrl()}">`;
+      docsHttpsSnippet.textContent = linkTag;
+      docsCopyHttps.dataset.code = linkTag;
+    }
+
+    function setMotion(mode) {
+      motionTarget.className = "w-32 h-32 rounded-3xl bg-gradient-to-br from-pink to-purple shadow-xl";
+      if (mode === "pulse") motionTarget.classList.add("animate-pulse");
+      if (mode === "spin") motionTarget.classList.add("animate-spin");
+      if (mode === "float") motionTarget.classList.add("animate-float");
+    }
+
+    function setCardState(mode) {
+      stateCard.className = "p-6 rounded-3xl transition-all space-y-4 max-w-md";
+      stateBadge.className = "px-3 py-1 rounded-full inline-block text-sm font-semibold";
+      stateButton.className = "px-5 py-3 rounded-xl transition-colors cursor-pointer";
+
+      if (mode === "accent") {
+        stateCard.classList.add("bg-gradient-to-br", "from-white", "to-gray-50", "shadow-xl", "border", "border-blue");
+        stateBadge.classList.add("bg-blue-10", "text-blue");
+        stateBadge.textContent = "Accent";
+        stateButton.classList.add("bg-blue", "text-white", "hover:opacity-90");
+        return;
+      }
+
+      if (mode === "success") {
+        stateCard.classList.add("bg-white", "shadow-lg", "border", "border-green");
+        stateBadge.classList.add("bg-emerald-10", "text-emerald");
+        stateBadge.textContent = "Success";
+        stateButton.classList.add("bg-green", "text-white", "hover:bg-emerald");
+        return;
+      }
+
+      stateCard.classList.add("bg-white", "shadow-lg");
+      stateBadge.classList.add("bg-blue-10", "text-blue");
+      stateBadge.textContent = "Default";
+      stateButton.classList.add("border", "border-blue", "text-blue", "hover:bg-blue", "hover:text-white");
+    }
+
+    function setActiveLink(id) {
+      sidebarLinks.forEach((link) => {
+        const isActive = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("active", isActive);
+      });
+    }
+
+    copyButtons.forEach(attachCopy);
+    updateHttpsSnippet();
+    setMotion("float");
+    setCardState("default");
+
+    document.querySelectorAll("[data-demo]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-demo]").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setMotion(button.dataset.demo);
+      });
+    });
+
+    document.querySelectorAll("[data-card-state]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-card-state]").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        setCardState(button.dataset.cardState);
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible) {
+        setActiveLink(visible.target.id);
+      }
+    }, { rootMargin: "-30% 0px -55% 0px", threshold: [0.1, 0.4, 0.7] });
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+  </script>
+</body>
+</html>
