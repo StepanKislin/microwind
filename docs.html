@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MicroWind Docs — Utility-first документация</title>
-  <meta name="description" content="Документация MicroWind CSS: установка, spacing, layout, colors, states, motion, responsive utilities и готовые паттерны.">
+  <meta name="description" content="Документация MicroWind CSS: установка, display, spacing, layout, colors, states, motion, responsive utilities и готовые паттерны.">
   <link rel="stylesheet" href="microwind.css">
   <style>
     :root {
@@ -484,6 +484,7 @@
           <strong>Utilities</strong>
           <a href="#spacing">Spacing</a>
           <a href="#layout">Layout</a>
+          <a href="#display">Display</a>
           <a href="#colors">Colors</a>
           <a href="#motion">Motion</a>
           <a href="#states">States</a>
@@ -501,7 +502,7 @@
       <main class="docs-main">
         <section class="docs-hero" id="introduction">
           <div class="docs-kicker">
-            <span>v1.1</span>
+            <span>v1.2</span>
             <span>docs portal</span>
             <span>github pages ready</span>
           </div>
@@ -518,7 +519,7 @@
 
         <section class="docs-section" id="install">
           <h2>Install</h2>
-          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл.</p>
+          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл и сразу получить расширенный utility-набор для display, layout, spacing, colors и states.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -554,7 +555,7 @@
 
         <section class="docs-section" id="spacing">
           <h2>Spacing</h2>
-          <p>В `v1.1` spacing-система стала заметно полнее: теперь удобно контролировать и внутренние, и внешние отступы, а также интервалы между соседними элементами.</p>
+          <p>В `v1.2` spacing-система остаётся основой библиотеки: теперь её удобно комбинировать с более широким display/layout API и расширенной палитрой цветов.</p>
 
           <div class="docs-demo">
             <div class="docs-demo-header">
@@ -616,7 +617,7 @@
 
         <section class="docs-section" id="layout">
           <h2>Layout</h2>
-          <p>Библиотека покрывает типовые layout-сценарии: flex, grid, widths, heights, alignment и container-like ограничения через `max-w-*`.</p>
+          <p>Библиотека покрывает типовые layout-сценарии: flex, grid, widths, heights, alignment, ordering, basis и container-like ограничения через `max-w-*`.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -647,9 +648,46 @@
           </div>
         </section>
 
+        <section class="docs-section" id="display">
+          <h2>Display</h2>
+          <p>В `v1.2` добавлено больше display-режимов для реальных UI-сценариев: `inline-grid`, `table`, `table-row`, `table-cell`, `flow-root`, `list-item`, а также дополнительные flex/grid helper-классы.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Display modes</h3>
+              <div class="code-block mt-4">.block .inline-block .inline-flex .inline-grid .table .table-row .table-cell .flow-root .contents</div>
+              <div class="docs-demo-stage space-y-4">
+                <div class="inline-grid grid-cols-3 gap-2 p-3 rounded-2xl bg-gray-50">
+                  <div class="w-8 h-8 rounded-lg bg-blue"></div>
+                  <div class="w-8 h-8 rounded-lg bg-sky"></div>
+                  <div class="w-8 h-8 rounded-lg bg-fuchsia"></div>
+                </div>
+                <div class="table w-full border border-gray-200 rounded-xl overflow-hidden">
+                  <div class="table-row">
+                    <div class="table-cell p-3 border-b border-gray-200 font-semibold">Cell A</div>
+                    <div class="table-cell p-3 border-b border-gray-200 text-gray-600">Cell B</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Flex & grid helpers</h3>
+              <div class="code-block mt-4">.flex-col-reverse .flex-wrap-reverse .basis-1/2 .order-first .place-items-center .justify-items-center</div>
+              <div class="docs-demo-stage grid place-items-center">
+                <div class="flex flex-wrap-reverse gap-3 max-w-sm">
+                  <div class="basis-1/2 p-4 rounded-2xl bg-sky-10 text-sky font-semibold">Basis 1/2</div>
+                  <div class="order-first p-4 rounded-2xl bg-orange-10 text-orange font-semibold">Order first</div>
+                  <div class="p-4 rounded-2xl bg-emerald-10 text-emerald font-semibold">Wrap reverse</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section class="docs-section" id="colors">
           <h2>Colors</h2>
-          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. Для мягких UI-акцентов доступны специальные варианты вроде `bg-blue-10` и `bg-emerald-10`.</p>
+          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. В `v1.2` палитра расширена: теперь есть `sky`, `fuchsia`, `rose`, `slate`, `zinc`, `stone` и больше soft color-вариантов.</p>
 
           <div class="swatch-grid">
             <article class="swatch">
@@ -668,19 +706,37 @@
               <div class="swatch-color bg-orange"></div>
               <div class="swatch-meta"><strong>Orange</strong><br><span class="token">.bg-orange</span> <span class="token">.text-orange</span></div>
             </article>
+            <article class="swatch">
+              <div class="swatch-color bg-sky"></div>
+              <div class="swatch-meta"><strong>Sky</strong><br><span class="token">.bg-sky</span> <span class="token">.text-sky</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-fuchsia"></div>
+              <div class="swatch-meta"><strong>Fuchsia</strong><br><span class="token">.bg-fuchsia</span> <span class="token">.text-fuchsia</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-rose"></div>
+              <div class="swatch-meta"><strong>Rose</strong><br><span class="token">.bg-rose</span> <span class="token">.text-rose</span></div>
+            </article>
+            <article class="swatch">
+              <div class="swatch-color bg-slate"></div>
+              <div class="swatch-meta"><strong>Slate</strong><br><span class="token">.bg-slate</span> <span class="token">.text-slate</span></div>
+            </article>
           </div>
 
           <div class="docs-demo">
             <div class="docs-demo-header">
               <div>
                 <h3>Soft colors and gradients</h3>
-                <p>Эти utility-классы особенно хорошо работают в бейджах, hero-блоках и карточках.</p>
+                <p>Эти utility-классы особенно хорошо работают в бейджах, hero-блоках, карточках и status-панелях.</p>
               </div>
-              <button class="copy-btn" data-code=".bg-blue-10 .text-blue .bg-gradient-to-br .from-pink .to-purple">Копировать</button>
+              <button class="copy-btn" data-code=".bg-sky-10 .text-sky .bg-gradient-to-br .from-fuchsia .to-orange">Копировать</button>
             </div>
             <div class="docs-demo-stage flex flex-wrap gap-4 items-center">
               <span class="bg-blue-10 text-blue px-4 py-2 rounded-full font-semibold">Soft accent</span>
               <span class="bg-emerald-10 text-emerald px-4 py-2 rounded-full font-semibold">Success tone</span>
+              <span class="bg-rose-10 text-rose px-4 py-2 rounded-full font-semibold">Rose tone</span>
+              <span class="bg-sky-10 text-sky px-4 py-2 rounded-full font-semibold">Sky tone</span>
               <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float"></div>
             </div>
           </div>
@@ -813,8 +869,8 @@
               <tbody>
                 <tr>
                   <td>Display</td>
-                  <td><span class="token">.flex</span> <span class="token">.grid</span> <span class="token">.hidden</span></td>
-                  <td>Базовые display-режимы и layout-контейнеры</td>
+                  <td><span class="token">.flex</span> <span class="token">.inline-grid</span> <span class="token">.table-cell</span></td>
+                  <td>Базовые и расширенные display-режимы, включая inline-grid и table helpers</td>
                 </tr>
                 <tr>
                   <td>Spacing</td>
@@ -833,8 +889,8 @@
                 </tr>
                 <tr>
                   <td>Colors</td>
-                  <td><span class="token">.bg-blue</span> <span class="token">.text-gray-600</span> <span class="token">.border-emerald</span></td>
-                  <td>Основные цвета интерфейса и soft-variants</td>
+                  <td><span class="token">.bg-sky</span> <span class="token">.text-fuchsia</span> <span class="token">.border-rose</span></td>
+                  <td>Основные цвета интерфейса, расширенная палитра и soft-variants</td>
                 </tr>
                 <tr>
                   <td>Motion</td>
@@ -859,6 +915,7 @@
         <a href="#principles">Principles</a>
         <a href="#spacing">Spacing</a>
         <a href="#layout">Layout</a>
+        <a href="#display">Display</a>
         <a href="#colors">Colors</a>
         <a href="#motion">Motion</a>
         <a href="#states">States</a>
@@ -889,7 +946,7 @@
     const stateBadge = document.getElementById("state-badge");
     const stateButton = document.getElementById("state-button");
     const sidebarLinks = document.querySelectorAll(".docs-sidebar a, .docs-toc a");
-    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "colors", "motion", "states", "responsive", "recipes", "playground-docs", "reference"];
+    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "display", "colors", "motion", "states", "responsive", "recipes", "playground-docs", "reference"];
 
     function resolveCssUrl() {
       const { protocol, host, pathname } = window.location;

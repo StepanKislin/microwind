@@ -580,7 +580,7 @@
     <header id="top" class="hero">
       <div class="container">
         <div class="eyebrow">
-          <span>v1.1</span>
+          <span>v1.2</span>
           <span>zero build</span>
           <span>docs portal</span>
         </div>
@@ -589,8 +589,8 @@
           <div>
             <h1 class="hero-title">Собирай интерфейсы <span>из коротких классов</span></h1>
             <p class="hero-subtitle">
-              MicroWind стал богаче по utility-набору: больше margin и padding-классов, фракционные размеры, hover/focus-состояния, простые градиенты,
-              `space-x`, `space-y`, позиционирование и готовые варианты для лендингов, карточек и UI-блоков.
+              MicroWind стал богаче по utility-набору: больше margin и padding-классов, новые display-режимы, расширенные flex/grid helpers, больше цветов,
+              soft-background варианты, фракционные размеры, hover/focus-состояния и готовые паттерны для лендингов, карточек и UI-блоков.
             </p>
 
             <div class="button-row">
@@ -599,7 +599,7 @@
             </div>
 
             <div class="preview-stack mt-10">
-              <div class="stat-chip">120+ utility-классов для layout, spacing, colors и states</div>
+              <div class="stat-chip">180+ utility-классов для display, layout, spacing, colors, motion и states</div>
               <div class="stat-chip">Можно скачать файл или отдать его по HTTPS после деплоя</div>
               <div class="stat-chip">Один CSS-файл, без сборки и без зависимостей</div>
             </div>
@@ -655,14 +655,14 @@
 
           <article class="feature-card">
             <div class="feature-icon">◫</div>
-            <h3 class="text-2xl font-black tracking-tight mb-3">Размеры и layout</h3>
-            <p>Теперь есть больше ширин и высот, фракционные значения вроде `w-1/2`, `w-3/4`, дополнительные `max-w-*`, позиционирование и расширенный grid/flex-набор.</p>
+            <h3 class="text-2xl font-black tracking-tight mb-3">Display, размеры и layout</h3>
+            <p>Теперь есть больше display-режимов, ширин и высот, фракционные значения вроде `w-1/2`, `w-3/4`, дополнительные `max-w-*`, `basis-*`, `order-*` и расширенный grid/flex-набор.</p>
           </article>
 
           <article class="feature-card">
             <div class="feature-icon">✦</div>
-            <h3 class="text-2xl font-black tracking-tight mb-3">States и декор</h3>
-            <p>Появились `transition-colors`, новые hover-варианты, фоновые soft-цвета, простые градиенты, `bg-clip-text`, анимация `animate-float` и улучшенные тени.</p>
+            <h3 class="text-2xl font-black tracking-tight mb-3">Colors, states и декор</h3>
+            <p>Появились новые палитры `sky`, `fuchsia`, `rose`, `slate`, больше soft-цветов, `transition-colors`, новые hover-варианты, простые градиенты, `bg-clip-text`, `animate-float`, `animate-bounce-soft` и улучшенные тени.</p>
           </article>
         </div>
       </div>
@@ -684,7 +684,7 @@
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h3 class="text-2xl font-black tracking-tight mb-2">Новая страница `docs.html`</h3>
-              <p>Внутри есть боковая навигация, секции по spacing/layout/colors/states/motion, таблицы reference и интерактивные демо.</p>
+              <p>Внутри есть боковая навигация, секции по display/spacing/layout/colors/states/motion, таблицы reference и интерактивные демо.</p>
             </div>
             <a href="docs.html" class="mini-button">Открыть документацию</a>
           </div>
@@ -736,6 +736,19 @@
             </div>
             <button class="copy-btn" data-code=".border .border-blue .text-blue .hover:bg-blue .hover:text-white">Копировать</button>
           </article>
+
+          <article class="docs-card">
+            <code>.inline-grid .grid-cols-3 .gap-2 .bg-sky-10 .text-sky</code>
+            <p class="mt-4">Новые display/color utilities для компактных dashboards, swatches и control-групп.</p>
+            <div class="demo-slab">
+              <div class="inline-grid grid-cols-3 gap-2 p-4 rounded-2xl bg-sky-10">
+                <div class="w-10 h-10 rounded-xl bg-sky"></div>
+                <div class="w-10 h-10 rounded-xl bg-fuchsia"></div>
+                <div class="w-10 h-10 rounded-xl bg-rose"></div>
+              </div>
+            </div>
+            <button class="copy-btn" data-code=".inline-grid .grid-cols-3 .gap-2 .bg-sky-10 .text-sky">Копировать</button>
+          </article>
         </div>
       </div>
     </section>
@@ -755,12 +768,13 @@
         <div class="showcase-grid">
           <div class="showcase-panel">
             <h3 class="text-2xl font-black tracking-tight mb-3">Utility State Switcher</h3>
-            <p>Выбери режим, и демонстрационная карточка справа сменит utility-набор без отдельного component CSS.</p>
+            <p>Выбери режим, и демонстрационная карточка справа сменит utility-набор без отдельного component CSS. Здесь используются новые цвета, display helpers и state utilities.</p>
 
             <div class="demo-switches">
               <button class="demo-chip active" data-mode="default">Default</button>
               <button class="demo-chip" data-mode="motion">Motion</button>
               <button class="demo-chip" data-mode="success">Success</button>
+              <button class="demo-chip" data-mode="display">Display</button>
             </div>
 
             <div id="demo-console" class="demo-console">
@@ -840,7 +854,7 @@
             <h2 class="section-title">Пробуй новые utility-классы сразу на странице</h2>
           </div>
           <p class="section-text">
-            Редактируй HTML слева и смотри результат справа. Я обновил демо так, чтобы оно использовало новые spacing, colors, gradients и button-state утилиты.
+            Редактируй HTML слева и смотри результат справа. Я обновил демо так, чтобы оно использовало новые spacing, display, colors, gradients и button-state утилиты.
           </p>
         </div>
 
@@ -850,13 +864,13 @@
 <div class="p-8 rounded-3xl bg-white shadow-lg space-y-6">
   <div class="flex items-center justify-between gap-4">
     <div>
-      <span class="bg-blue-10 text-blue px-3 py-1 rounded-full text-sm font-semibold">MicroWind</span>
+      <span class="bg-sky-10 text-sky px-3 py-1 rounded-full text-sm font-semibold">MicroWind</span>
       <h2 class="text-3xl font-black tracking-tight mt-4">Обновлённый utility-набор</h2>
       <p class="text-gray-600 mt-3 max-w-md">
-        Теперь удобнее собирать hero-секции, карточки, списки, кнопки и панели без кастомного CSS.
+        Теперь удобнее собирать hero-секции, карточки, списки, кнопки, таблицы и компактные панели без кастомного CSS.
       </p>
     </div>
-    <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float"></div>
+    <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-fuchsia to-orange animate-bounce-soft"></div>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -868,13 +882,13 @@
 
     <div class="p-5 rounded-2xl bg-gradient-to-b from-white to-gray-50 border border-gray-200">
       <div class="flex items-center gap-3 mb-4">
-        <div class="w-12 h-12 rounded-xl bg-emerald flex items-center justify-center text-white font-bold">+</div>
+        <div class="w-12 h-12 rounded-xl bg-rose flex items-center justify-center text-white font-bold">+</div>
         <div>
-          <div class="font-bold text-gray-800">Новые состояния</div>
-          <div class="text-sm text-gray-500">hover, focus, opacity, transition-colors</div>
+          <div class="font-bold text-gray-800">Новые состояния и цвета</div>
+          <div class="text-sm text-gray-500">hover, focus, opacity, transition-colors, soft palettes</div>
         </div>
       </div>
-      <button class="border border-blue text-blue px-5 py-3 rounded-xl hover:bg-blue hover:text-white transition-colors cursor-pointer">
+      <button class="border border-sky text-sky px-5 py-3 rounded-xl hover:bg-sky hover:text-white transition-colors cursor-pointer">
         Попробовать
       </button>
     </div>
@@ -883,7 +897,7 @@
 
             <div id="live-preview" class="preview"></div>
           </div>
-          <p class="playground-note mt-4">Совет: попробуй заменить `space-y-6` на `space-y-2`, `rounded-3xl` на `rounded-lg` или `bg-blue-10` на `bg-emerald-10` и сразу увидишь разницу.</p>
+          <p class="playground-note mt-4">Совет: попробуй заменить `space-y-6` на `space-y-2`, `rounded-3xl` на `rounded-lg`, `bg-sky-10` на `bg-rose-10` или `border-sky` на `border-emerald` и сразу увидишь разницу.</p>
         </div>
       </div>
     </section>
@@ -985,6 +999,16 @@
         demoOrb.classList.add("bg-emerald", "animate-pulse");
         demoButton.classList.add("bg-green", "text-white", "hover:bg-emerald");
         demoConsole.textContent = ".border-green .bg-emerald-10 .bg-green .hover:bg-emerald .animate-pulse";
+        return;
+      }
+
+      if (mode === "display") {
+        demoCard.classList.add("bg-white", "shadow-xl", "border", "border-sky");
+        demoBadge.classList.add("bg-sky-10", "text-sky");
+        demoBadge.textContent = "Display";
+        demoOrb.classList.add("bg-sky", "hover-rotate");
+        demoButton.classList.add("bg-fuchsia", "text-white", "hover:opacity-90");
+        demoConsole.textContent = ".inline-grid .table-cell .border-sky .bg-sky-10 .bg-fuchsia .hover-rotate";
         return;
       }
 
