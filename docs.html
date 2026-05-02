@@ -19,10 +19,14 @@
   <meta property="og:locale" content="ru_RU">
 
   <title>MicroWind Docs — Utility-first документация</title>
-  <meta name="description" content="Документация MicroWind CSS: установка, display, spacing, layout, colors, states, motion, responsive utilities и готовые паттерны.">
+  <meta name="description" content="Документация MicroWind CSS: установка, display, spacing, layout, colors, typography, filters, states, responsive utilities и готовые паттерны.">
   <link rel="stylesheet" href="microwind.css">
   <link rel="icon" type="image/png" href="assets/img/logo.png">
   <style>
+    html {
+      scroll-padding-top: 5.75rem;
+    }
+
     :root {
       --docs-bg: #f6f7fb;
       --docs-panel: rgba(255, 255, 255, 0.8);
@@ -502,6 +506,8 @@
           <a href="#layout">Layout</a>
           <a href="#display">Display</a>
           <a href="#colors">Colors</a>
+          <a href="#typography">Typography</a>
+          <a href="#filters">Filters</a>
           <a href="#motion">Motion</a>
           <a href="#states">States</a>
           <a href="#responsive">Responsive</a>
@@ -509,6 +515,7 @@
 
         <div class="docs-nav-group">
           <strong>Patterns</strong>
+          <a href="#composition">Composition</a>
           <a href="#recipes">Recipes</a>
           <a href="#playground-docs">Live examples</a>
           <a href="#reference">Reference table</a>
@@ -518,7 +525,7 @@
       <main class="docs-main">
         <section class="docs-hero" id="introduction">
           <div class="docs-kicker">
-            <span>v1.2</span>
+            <span>v1.3</span>
             <span>docs portal</span>
             <span>github pages ready</span>
           </div>
@@ -535,7 +542,7 @@
 
         <section class="docs-section" id="install">
           <h2>Install</h2>
-          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл и сразу получить расширенный utility-набор для display, layout, spacing, colors и states.</p>
+          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл и сразу получить расширенный utility-набор для display, layout, spacing, colors, typography, filters и states.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -571,7 +578,7 @@
 
         <section class="docs-section" id="spacing">
           <h2>Spacing</h2>
-          <p>В `v1.2` spacing-система остаётся основой библиотеки: теперь её удобно комбинировать с более широким display/layout API и расширенной палитрой цветов.</p>
+          <p>В `v1.3` spacing-система остаётся основой библиотеки: теперь её удобно комбинировать с более широким display/layout API, typography utilities, filters и расширенной палитрой цветов.</p>
 
           <div class="docs-demo">
             <div class="docs-demo-header">
@@ -666,7 +673,7 @@
 
         <section class="docs-section" id="display">
           <h2>Display</h2>
-          <p>В `v1.2` добавлено больше display-режимов для реальных UI-сценариев: `inline-grid`, `table`, `table-row`, `table-cell`, `flow-root`, `list-item`, а также дополнительные flex/grid helper-классы.</p>
+          <p>В `v1.3` добавлено больше display-режимов для реальных UI-сценариев: `inline-grid`, `table`, `inline-table`, `table-row`, `table-cell`, `table-caption`, `flow-root`, `list-item`, `contents`, а также дополнительные flex/grid helper-классы.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -703,7 +710,7 @@
 
         <section class="docs-section" id="colors">
           <h2>Colors</h2>
-          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. В `v1.2` палитра расширена: теперь есть `sky`, `fuchsia`, `rose`, `slate`, `zinc`, `stone` и больше soft color-вариантов.</p>
+          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. В `v1.3` палитра расширена: теперь есть `sky`, `fuchsia`, `rose`, `slate`, `zinc`, `stone` и больше soft color-вариантов.</p>
 
           <div class="swatch-grid">
             <article class="swatch">
@@ -755,6 +762,85 @@
               <span class="bg-sky-10 text-sky px-4 py-2 rounded-full font-semibold">Sky tone</span>
               <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-pink to-purple animate-float"></div>
             </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="typography">
+          <h2>Typography</h2>
+          <p>Типографика в MicroWind строится из небольших composable-классов: размеры, веса, line-height, tracking, alignment и шрифтовые семьи. В `v1.3` набор стал заметно богаче за счёт `font-serif`, `font-extrabold`, `text-9xl`, `antialiased` и `subpixel-antialiased`.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Scale and weight</h3>
+              <p>Комбинируй размер и насыщенность прямо в HTML, чтобы быстро собирать заголовки, лиды и supporting text.</p>
+              <div class="code-block mt-4">.text-2xl .text-4xl .text-9xl .font-semibold .font-extrabold .font-black</div>
+              <div class="docs-demo-stage space-y-3">
+                <div class="text-2xl font-semibold tracking-tight">Section heading</div>
+                <div class="text-4xl font-extrabold tracking-tight">Hero heading</div>
+                <div class="text-sm text-gray-500">Scale utilities помогают выстраивать иерархию без отдельного typography.css.</div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Families and rendering</h3>
+              <p>Можно смешивать системный sans, serif и mono, а также включать antialiasing для более аккуратной визуальной подачи.</p>
+              <div class="code-block mt-4">.font-sans .font-serif .font-mono .antialiased .subpixel-antialiased</div>
+              <div class="docs-demo-stage space-y-3">
+                <div class="font-serif text-3xl font-extrabold tracking-tight antialiased text-slate">Editorial serif title</div>
+                <div class="font-mono text-sm text-zinc subpixel-antialiased">font-mono for labels, snippets and UI metadata</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="docs-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>Common typography recipe</h3>
+                <p>Быстрый старт для expressive headline + supporting paragraph.</p>
+              </div>
+              <button class="copy-btn" data-code=".font-serif .font-extrabold .tracking-tight .text-4xl .text-gray-600">Копировать</button>
+            </div>
+            <div class="docs-demo-stage">
+              <div class="max-w-2xl space-y-3">
+                <h3 class="font-serif font-extrabold tracking-tight text-4xl text-slate antialiased">Typography without extra CSS files</h3>
+                <p class="text-gray-600 leading-relaxed">Utility-first подход остаётся быстрым, но за счёт типографических классов интерфейс выглядит гораздо взрослее и выразительнее.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="filters">
+          <h2>Filters</h2>
+          <p>В `v1.3` появились filter и backdrop-filter utilities для более атмосферных интерфейсов: `blur-*`, `brightness-*`, `contrast-*`, `grayscale`, `invert`, `sepia`, `saturate-*`, `backdrop-blur-*`. Эти классы особенно полезны для hero-оверлеев, glassmorphism-панелей и визуальных акцентов.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Element filters</h3>
+              <p>Фильтры применяются прямо к элементу и помогают быстро менять восприятие декоративных блоков и медиа-плейсхолдеров.</p>
+              <div class="code-block mt-4">.blur-sm .brightness-110 .contrast-125 .saturate-150 .sepia</div>
+              <div class="docs-demo-stage flex items-center gap-4 flex-wrap">
+                <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-fuchsia to-rose blur-sm"></div>
+                <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-sky to-cyan brightness-110"></div>
+                <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-orange to-yellow contrast-125"></div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Backdrop filters</h3>
+              <p>Backdrop utilities размывают фон позади панели. Это удобно для sticky navigation, floating cards и overlay-блоков.</p>
+              <div class="code-block mt-4">.bg-white .backdrop-blur .border .border-fuchsia .contrast-125</div>
+              <div class="docs-demo-stage">
+                <div class="p-6 rounded-3xl bg-white backdrop-blur border border-fuchsia contrast-125">
+                  <div class="text-sm uppercase tracking-widest text-fuchsia mb-2">Backdrop demo</div>
+                  <div class="font-extrabold text-slate">Soft glass card</div>
+                  <p class="mt-2 text-gray-600">Комбинируй backdrop blur с полупрозрачным фоном и контрастом для более дорогого визуального ощущения.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="docs-callout">
+            <p><strong>Практический совет:</strong> фильтры лучше использовать как акцент, а не как базовый стиль на всех элементах. Чаще всего достаточно одного `backdrop-blur` блока и 1-2 декоративных filtered-элементов в hero или карточке.</p>
           </div>
         </section>
 
@@ -818,6 +904,36 @@
           </div>
         </section>
 
+        <section class="docs-section" id="composition">
+          <h2>Composition</h2>
+          <p>Самый быстрый способ работать с MicroWind: мыслить не компонентами, а слоями. Сначала выбирай display/layout, затем spacing, потом цвет, типографику и только после этого добавляй state или filter utilities.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Recommended order</h3>
+              <div class="pattern-list">
+                <div class="pattern-item"><strong>1. Structure:</strong> <span class="token">.flex</span> <span class="token">.grid</span> <span class="token">.table</span> <span class="token">.w-full</span></div>
+                <div class="pattern-item"><strong>2. Rhythm:</strong> <span class="token">.p-6</span> <span class="token">.gap-4</span> <span class="token">.space-y-3</span></div>
+                <div class="pattern-item"><strong>3. Surface:</strong> <span class="token">.bg-white</span> <span class="token">.border</span> <span class="token">.rounded-2xl</span> <span class="token">.shadow</span></div>
+                <div class="pattern-item"><strong>4. Tone:</strong> <span class="token">.text-slate</span> <span class="token">.font-extrabold</span> <span class="token">.bg-sky-10</span></div>
+                <div class="pattern-item"><strong>5. Interaction:</strong> <span class="token">.hover:bg-blue</span> <span class="token">.transition-colors</span> <span class="token">.backdrop-blur</span></div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Example stack</h3>
+              <div class="code-block mt-4">&lt;article class="flex flex-col gap-4 p-6 rounded-3xl bg-white backdrop-blur border border-slate shadow"&gt;</div>
+              <div class="docs-demo-stage">
+                <article class="flex flex-col gap-4 p-6 rounded-3xl bg-white backdrop-blur border border-slate shadow">
+                  <div class="bg-sky-10 text-sky px-3 py-1 rounded-full inline-block text-sm font-semibold">Composition</div>
+                  <div class="font-serif font-extrabold text-3xl tracking-tight text-slate">Layered utility recipe</div>
+                  <p class="text-gray-600">Такой порядок помогает быстрее собирать чистые и предсказуемые блоки, особенно когда utility-набор становится большим.</p>
+                </article>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section class="docs-section" id="recipes">
           <h2>Recipes</h2>
           <p>Ниже несколько готовых комбинаций, которые удобно использовать как стартовые паттерны.</p>
@@ -867,6 +983,29 @@
               </div>
             </div>
           </div>
+
+          <div class="docs-demo">
+            <div class="docs-demo-header">
+              <div>
+                <h3>Display + filter mini pattern</h3>
+                <p>Небольшой референс для data-like панели, где вместе работают display, colors, typography и filters.</p>
+              </div>
+              <button class="copy-btn" data-code=".table .table-row .table-cell .backdrop-blur .font-semibold .text-slate">Копировать</button>
+            </div>
+            <div class="docs-demo-stage">
+              <div class="table w-full rounded-3xl overflow-hidden border border-slate bg-white backdrop-blur">
+                <div class="table-caption p-4 bg-gray-50 text-slate font-semibold text-left">System snapshot</div>
+                <div class="table-row">
+                  <div class="table-cell p-4 border-t border-slate font-semibold text-slate">Palette</div>
+                  <div class="table-cell p-4 border-t border-slate text-gray-600">Extended with sky, fuchsia, rose, zinc, stone</div>
+                </div>
+                <div class="table-row">
+                  <div class="table-cell p-4 border-t border-slate font-semibold text-slate">Typography</div>
+                  <div class="table-cell p-4 border-t border-slate text-gray-600">Serif, extra-bold and rendering helpers</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="docs-section" id="reference">
@@ -900,13 +1039,18 @@
                 </tr>
                 <tr>
                   <td>Typography</td>
-                  <td><span class="token">.text-3xl</span> <span class="token">.font-black</span> <span class="token">.tracking-tight</span></td>
-                  <td>Размеры текста, насыщенность, ритм и выравнивание</td>
+                  <td><span class="token">.text-3xl</span> <span class="token">.font-serif</span> <span class="token">.font-extrabold</span></td>
+                  <td>Размеры текста, насыщенность, ритм, rendering и шрифтовые семьи</td>
                 </tr>
                 <tr>
                   <td>Colors</td>
                   <td><span class="token">.bg-sky</span> <span class="token">.text-fuchsia</span> <span class="token">.border-rose</span></td>
                   <td>Основные цвета интерфейса, расширенная палитра и soft-variants</td>
+                </tr>
+                <tr>
+                  <td>Filters</td>
+                  <td><span class="token">.blur-sm</span> <span class="token">.contrast-125</span> <span class="token">.backdrop-blur</span></td>
+                  <td>Blur, contrast, brightness и glass-эффекты для атмосферных поверхностей</td>
                 </tr>
                 <tr>
                   <td>Motion</td>
@@ -933,9 +1077,12 @@
         <a href="#layout">Layout</a>
         <a href="#display">Display</a>
         <a href="#colors">Colors</a>
+        <a href="#typography">Typography</a>
+        <a href="#filters">Filters</a>
         <a href="#motion">Motion</a>
         <a href="#states">States</a>
         <a href="#responsive">Responsive</a>
+        <a href="#composition">Composition</a>
         <a href="#recipes">Recipes</a>
         <a href="#playground-docs">Live examples</a>
         <a href="#reference">Reference table</a>
@@ -962,7 +1109,7 @@
     const stateBadge = document.getElementById("state-badge");
     const stateButton = document.getElementById("state-button");
     const sidebarLinks = document.querySelectorAll(".docs-sidebar a, .docs-toc a");
-    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "display", "colors", "motion", "states", "responsive", "recipes", "playground-docs", "reference"];
+    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "display", "colors", "typography", "filters", "motion", "states", "responsive", "composition", "recipes", "playground-docs", "reference"];
 
     function resolveCssUrl() {
       const { protocol, host, pathname } = window.location;
