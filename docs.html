@@ -19,7 +19,7 @@
   <meta property="og:locale" content="ru_RU">
 
   <title>MicroWind Docs — Utility-first документация</title>
-  <meta name="description" content="Документация MicroWind CSS: установка, display, spacing, layout, colors, typography, filters, states, responsive utilities и готовые паттерны.">
+  <meta name="description" content="Документация MicroWind CSS: установка, display, spacing, layout, sizing, position, surfaces, colors, typography, filters, states, responsive utilities и готовые паттерны.">
   <link rel="stylesheet" href="microwind.css">
   <link rel="icon" type="image/png" href="assets/img/logo.png">
   <style>
@@ -504,7 +504,10 @@
           <strong>Utilities</strong>
           <a href="#spacing">Spacing</a>
           <a href="#layout">Layout</a>
+          <a href="#sizing">Sizing</a>
+          <a href="#position">Position</a>
           <a href="#display">Display</a>
+          <a href="#surfaces">Surfaces</a>
           <a href="#colors">Colors</a>
           <a href="#typography">Typography</a>
           <a href="#filters">Filters</a>
@@ -515,6 +518,7 @@
 
         <div class="docs-nav-group">
           <strong>Patterns</strong>
+          <a href="#utilities-recipes">Utility Recipes</a>
           <a href="#composition">Composition</a>
           <a href="#recipes">Recipes</a>
           <a href="#playground-docs">Live examples</a>
@@ -525,8 +529,8 @@
       <main class="docs-main">
         <section class="docs-hero" id="introduction">
           <div class="docs-kicker">
-            <span>v1.3</span>
-            <span>docs portal</span>
+            <span>v1.4</span>
+            <span>reference</span>
             <span>github pages ready</span>
           </div>
           <h1>Документация <span>MicroWind CSS</span></h1>
@@ -542,7 +546,7 @@
 
         <section class="docs-section" id="install">
           <h2>Install</h2>
-          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл и сразу получить расширенный utility-набор для display, layout, spacing, colors, typography, filters и states.</p>
+          <p>MicroWind не требует build-процесса. В базовом сценарии достаточно подключить один CSS-файл и сразу получить расширенный utility-набор для display, layout, spacing, sizing, position, surfaces, colors, typography, filters и states.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -578,7 +582,7 @@
 
         <section class="docs-section" id="spacing">
           <h2>Spacing</h2>
-          <p>В `v1.3` spacing-система остаётся основой библиотеки: теперь её удобно комбинировать с более широким display/layout API, typography utilities, filters и расширенной палитрой цветов.</p>
+          <p>В `v1.4` spacing-система остаётся основой библиотеки: теперь её удобно комбинировать с более широким display/layout API, sizing, surfaces, typography utilities, filters и расширенной палитрой цветов.</p>
 
           <div class="docs-demo">
             <div class="docs-demo-header">
@@ -671,9 +675,71 @@
           </div>
         </section>
 
+        <section class="docs-section" id="sizing">
+          <h2>Sizing</h2>
+          <p>Размерные utility-классы помогают быстрее собирать hero-сетки, media blocks, dashboards и контентные контейнеры. В `v1.4` сюда входят дополнительные фракции ширины, `max-w-prose`, screen-based ограничения и более крупные size-токены.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Width scale</h3>
+              <div class="code-block mt-4">.w-1/5 .w-2/5 .w-3/5 .w-4/5 .w-full .w-fit</div>
+              <div class="docs-demo-stage space-y-3">
+                <div class="h-4 w-1/5 rounded-full bg-blue"></div>
+                <div class="h-4 w-2/5 rounded-full bg-sky"></div>
+                <div class="h-4 w-3/5 rounded-full bg-indigo"></div>
+                <div class="h-4 w-4/5 rounded-full bg-purple"></div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Readable containers</h3>
+              <div class="code-block mt-4">.max-w-prose .max-w-screen-md .container-lg</div>
+              <div class="docs-demo-stage">
+                <div class="max-w-prose p-5 rounded-3xl bg-white shadow">
+                  <div class="text-sm uppercase tracking-widest text-gray-500 mb-2">Readable width</div>
+                  <p class="text-gray-600">Контентные блоки с `max-w-prose` удобны для статей, changelog-секций, case studies и документации.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="docs-section" id="position">
+          <h2>Position</h2>
+          <p>Position-слой нужен для sticky navigation, floating badges, hero overlays и составных card layouts. В библиотеке есть `relative`, `absolute`, `sticky`, `inset-*`, auto-позиции и базовые смещения.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Layered badge</h3>
+              <div class="code-block mt-4">.relative .absolute .top-4 .right-4 .z-10 .-translate-y-1</div>
+              <div class="docs-demo-stage">
+                <div class="relative p-6 rounded-3xl bg-white shadow max-w-sm">
+                  <div class="absolute top-4 right-4 z-10 bg-emerald-10 text-emerald px-3 py-1 rounded-full text-sm font-semibold">Live</div>
+                  <div class="font-extrabold text-slate text-xl tracking-tight">Floating label</div>
+                  <p class="mt-3 text-gray-600">Позиционирование помогает собирать метки, угловые actions и декоративные слои без отдельного CSS.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Sticky patterns</h3>
+              <div class="code-block mt-4">.sticky .top-0 .z-50 .backdrop-blur</div>
+              <div class="docs-demo-stage">
+                <div class="p-4 rounded-3xl bg-white border border-gray-200">
+                  <div class="sticky top-0 z-10 p-3 rounded-2xl bg-gray-50 border border-gray-200 backdrop-blur">Sticky helper reference</div>
+                  <div class="mt-4 space-y-2 text-gray-600">
+                    <p>Используется для компактных subnav, sidebars и action bars.</p>
+                    <p>Сочетание `sticky`, `top-*` и `z-*` перекрывает большинство базовых интерфейсных задач.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section class="docs-section" id="display">
           <h2>Display</h2>
-          <p>В `v1.3` добавлено больше display-режимов для реальных UI-сценариев: `inline-grid`, `table`, `inline-table`, `table-row`, `table-cell`, `table-caption`, `flow-root`, `list-item`, `contents`, а также дополнительные flex/grid helper-классы.</p>
+          <p>В `v1.4` display-слой покрывает больше реальных UI-сценариев: `inline-grid`, `table`, `inline-table`, `table-row`, `table-cell`, `table-caption`, `table-column`, `flow-root`, `list-item`, `contents`, а также дополнительные flex/grid helper-классы.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -708,9 +774,40 @@
           </div>
         </section>
 
+        <section class="docs-section" id="surfaces">
+          <h2>Surfaces</h2>
+          <p>Surface-утилиты отвечают за визуальный вес блока: radius, border, shadow, ring, opacity и glass-like эффекты. Это особенно важно для коммерческих лендингов, product cards, pricing sections и overlay-панелей.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Elevation</h3>
+              <div class="code-block mt-4">.rounded-4xl .shadow-2xl .ring-purple .opacity-95</div>
+              <div class="docs-demo-stage">
+                <div class="p-6 rounded-4xl bg-white shadow-2xl ring-purple opacity-95 max-w-sm">
+                  <div class="text-sm uppercase tracking-widest text-purple mb-2">Premium surface</div>
+                  <div class="font-extrabold text-slate tracking-tight text-2xl">Elevated card</div>
+                  <p class="mt-3 text-gray-600">Подходит для hero highlights, KPI cards и product storytelling sections.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Glass layer</h3>
+              <div class="code-block mt-4">.bg-white .backdrop-blur .border .border-slate .shadow-lg</div>
+              <div class="docs-demo-stage">
+                <div class="p-6 rounded-3xl bg-white backdrop-blur border border-slate shadow-lg">
+                  <div class="text-sm uppercase tracking-widest text-slate mb-2">Glass layer</div>
+                  <div class="font-serif font-extrabold text-2xl tracking-tight text-slate">Soft interface panel</div>
+                  <p class="mt-3 text-gray-600">Используется для floating panels, marketing callouts и docs callout blocks.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section class="docs-section" id="colors">
           <h2>Colors</h2>
-          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. В `v1.3` палитра расширена: теперь есть `sky`, `fuchsia`, `rose`, `slate`, `zinc`, `stone` и больше soft color-вариантов.</p>
+          <p>MicroWind использует набор переменных `--mw-*` и готовые `bg-*`, `text-*`, `border-*` классы. В `v1.4` палитра расширена: теперь есть `sky`, `fuchsia`, `rose`, `slate`, `zinc`, `stone` и больше soft color-вариантов.</p>
 
           <div class="swatch-grid">
             <article class="swatch">
@@ -767,7 +864,7 @@
 
         <section class="docs-section" id="typography">
           <h2>Typography</h2>
-          <p>Типографика в MicroWind строится из небольших composable-классов: размеры, веса, line-height, tracking, alignment и шрифтовые семьи. В `v1.3` набор стал заметно богаче за счёт `font-serif`, `font-extrabold`, `text-9xl`, `antialiased` и `subpixel-antialiased`.</p>
+          <p>Типографика в MicroWind строится из небольших composable-классов: размеры, веса, line-height, tracking, alignment и шрифтовые семьи. В `v1.4` набор стал заметно богаче за счёт `font-serif`, `font-extrabold`, `text-9xl`, `antialiased`, `subpixel-antialiased` и `line-clamp-*`.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -811,7 +908,7 @@
 
         <section class="docs-section" id="filters">
           <h2>Filters</h2>
-          <p>В `v1.3` появились filter и backdrop-filter utilities для более атмосферных интерфейсов: `blur-*`, `brightness-*`, `contrast-*`, `grayscale`, `invert`, `sepia`, `saturate-*`, `backdrop-blur-*`. Эти классы особенно полезны для hero-оверлеев, glassmorphism-панелей и визуальных акцентов.</p>
+          <p>В `v1.4` доступны filter и backdrop-filter utilities для более атмосферных интерфейсов: `blur-*`, `brightness-*`, `contrast-*`, `grayscale`, `invert`, `sepia`, `saturate-*`, `backdrop-blur-*`, а также вспомогательные ring и shadow surface-утилиты.</p>
 
           <div class="docs-grid">
             <article class="docs-card">
@@ -901,6 +998,38 @@
                 <div class="p-6 rounded-2xl bg-white shadow">Колонка 2</div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="utilities-recipes">
+          <h2>Utility Recipes</h2>
+          <p>Ниже несколько готовых сочетаний для частых задач: readable article block, compact stat row, floating CTA и documentation callout. Такие recipes полезны как стартовые шаблоны для командной работы.</p>
+
+          <div class="docs-grid">
+            <article class="docs-card">
+              <h3>Readable article</h3>
+              <div class="code-block mt-4">.max-w-prose .font-serif .leading-relaxed .space-y-4</div>
+              <div class="docs-demo-stage">
+                <div class="max-w-prose space-y-3">
+                  <div class="font-serif font-extrabold text-3xl tracking-tight text-slate">Readable article block</div>
+                  <p class="text-gray-600 leading-relaxed">Удобный паттерн для editorial секций, статей, кейсов и длинных описаний продукта.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="docs-card">
+              <h3>Compact stat row</h3>
+              <div class="code-block mt-4">.flex .items-center .justify-between .p-4 .rounded-2xl .bg-white .shadow</div>
+              <div class="docs-demo-stage">
+                <div class="flex items-center justify-between p-4 rounded-2xl bg-white shadow">
+                  <div>
+                    <div class="text-xs uppercase tracking-widest text-gray-500">Conversion</div>
+                    <div class="font-extrabold text-2xl tracking-tight text-slate">4.8%</div>
+                  </div>
+                  <div class="bg-emerald-10 text-emerald px-3 py-1 rounded-full text-sm font-semibold">+12%</div>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -1034,8 +1163,18 @@
                 </tr>
                 <tr>
                   <td>Sizing</td>
-                  <td><span class="token">.w-full</span> <span class="token">.w-1/2</span> <span class="token">.max-w-4xl</span></td>
+                  <td><span class="token">.w-full</span> <span class="token">.w-2/5</span> <span class="token">.max-w-prose</span></td>
                   <td>Ширины, высоты, ограничение контента</td>
+                </tr>
+                <tr>
+                  <td>Position</td>
+                  <td><span class="token">.relative</span> <span class="token">.absolute</span> <span class="token">.top-4</span></td>
+                  <td>Слои интерфейса, badges, overlays, sticky helpers и базовые смещения</td>
+                </tr>
+                <tr>
+                  <td>Surfaces</td>
+                  <td><span class="token">.rounded-4xl</span> <span class="token">.shadow-2xl</span> <span class="token">.ring-purple</span></td>
+                  <td>Визуальный вес блока: radius, elevation, ring, glass и premium-panel сценарии</td>
                 </tr>
                 <tr>
                   <td>Typography</td>
@@ -1075,13 +1214,17 @@
         <a href="#principles">Principles</a>
         <a href="#spacing">Spacing</a>
         <a href="#layout">Layout</a>
+        <a href="#sizing">Sizing</a>
+        <a href="#position">Position</a>
         <a href="#display">Display</a>
+        <a href="#surfaces">Surfaces</a>
         <a href="#colors">Colors</a>
         <a href="#typography">Typography</a>
         <a href="#filters">Filters</a>
         <a href="#motion">Motion</a>
         <a href="#states">States</a>
         <a href="#responsive">Responsive</a>
+        <a href="#utilities-recipes">Utility Recipes</a>
         <a href="#composition">Composition</a>
         <a href="#recipes">Recipes</a>
         <a href="#playground-docs">Live examples</a>
@@ -1109,7 +1252,7 @@
     const stateBadge = document.getElementById("state-badge");
     const stateButton = document.getElementById("state-button");
     const sidebarLinks = document.querySelectorAll(".docs-sidebar a, .docs-toc a");
-    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "display", "colors", "typography", "filters", "motion", "states", "responsive", "composition", "recipes", "playground-docs", "reference"];
+    const sectionIds = ["introduction", "install", "principles", "spacing", "layout", "sizing", "position", "display", "surfaces", "colors", "typography", "filters", "motion", "states", "responsive", "utilities-recipes", "composition", "recipes", "playground-docs", "reference"];
 
     function resolveCssUrl() {
       const { protocol, host, pathname } = window.location;

@@ -20,7 +20,7 @@
 
 
   <title>MicroWind CSS — Лёгкая utility-first библиотека</title>
-  <meta name="description" content="MicroWind CSS — компактная utility-first библиотека с готовыми классами для layout, spacing, typography и быстрым подключением через GitHub Pages.">
+  <meta name="description" content="MicroWind CSS — compact utility-first библиотека с готовыми классами для layout, spacing, typography, surfaces и быстрым подключением через GitHub Pages.">
   <link rel="stylesheet" href="microwind.css">
   <link rel="icon" type="image/png" href="assets/img/logo.png">
   <style>
@@ -480,6 +480,51 @@
       line-height: 1.7;
     }
 
+    .playground-shell {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .playground-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 1.1rem;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.9)),
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 38%);
+      color: #eff6ff;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .playground-bar h3 {
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .playground-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .playground-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
     .editor-wrap {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -495,7 +540,7 @@
     }
 
     .editor {
-      background: #0f172a;
+      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
       color: #ecf5ff;
       padding: 1.15rem;
       resize: vertical;
@@ -510,7 +555,10 @@
     }
 
     .preview {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+      background:
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.14), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94));
       padding: 1.4rem;
       overflow: auto;
       position: relative;
@@ -525,6 +573,13 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #94a3b8;
+    }
+
+    .playground-note {
+      padding: 1rem 1.1rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.18);
     }
 
     .footer-note {
@@ -597,17 +652,17 @@
     <header id="top" class="hero">
       <div class="container">
         <div class="eyebrow">
-          <span>v1.3</span>
+          <span>v1.4</span>
           <span>zero build</span>
-          <span>docs portal</span>
+          <span>reference</span>
         </div>
 
         <div class="hero-grid">
           <div>
             <h1 class="hero-title">Собирай интерфейсы <span>из коротких классов</span></h1>
             <p class="hero-subtitle">
-              MicroWind стал богаче по utility-набору: больше spacing-классов, шире display и layout API, новые палитры, typography utilities,
-              фильтры и backdrop-фильтры, а также больше готовых состояний для карточек, лендингов, UI-блоков и быстрых прототипов.
+              MicroWind объединяет плотный utility-набор для spacing, display, layout, typography, surfaces, filters и states.
+              Библиотека подходит для лендингов, продуктовых интерфейсов, документации, панелей и быстрых прототипов без build step.
             </p>
 
             <div class="button-row">
@@ -616,7 +671,7 @@
             </div>
 
             <div class="preview-stack mt-10">
-              <div class="stat-chip">250+ utility-классов для display, layout, spacing, colors, typography, filters и states</div>
+              <div class="stat-chip">300+ utility-классов для display, layout, spacing, colors, typography, surfaces, filters и states</div>
               <div class="stat-chip">Можно скачать файл или отдать его по HTTPS после деплоя</div>
               <div class="stat-chip">Один CSS-файл, без сборки и без зависимостей</div>
             </div>
@@ -693,15 +748,15 @@
             <h2 class="section-title">Отдельный docs-портал и быстрые сниппеты</h2>
           </div>
           <p class="section-text">
-            Отдельный файл `docs.html` — документация с боковой навигацией и оглавлением. Ниже — короткие сниппеты для быстрого старта с лендинга: typography, filters и display utilities.
+            Отдельный файл `docs.html` — документация с боковой навигацией, оглавлением и расширенными reference-разделами. Ниже — короткие сниппеты для быстрого старта: typography, filters, surfaces и display utilities.
           </p>
         </div>
 
         <div class="download-card mb-8">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h3 class="text-2xl font-black tracking-tight mb-2">Новая страница `docs.html`</h3>
-              <p>Внутри есть боковая навигация, секции по spacing/layout/display/colors/typography/filters/states/motion, таблицы reference и интерактивные демо.</p>
+              <h3 class="text-2xl font-black tracking-tight mb-2">Документация `docs.html`</h3>
+              <p>Внутри есть боковая навигация, секции по spacing, layout, sizing, position, surfaces, colors, typography, filters, states и motion, а также таблицы reference и интерактивные демо.</p>
             </div>
             <a href="docs.html" class="mini-button">Открыть документацию</a>
           </div>
@@ -788,6 +843,18 @@
             </div>
             <button class="copy-btn" data-code=".backdrop-blur .contrast-125 .bg-fuchsia-10 .border-fuchsia">Копировать</button>
           </article>
+
+          <article class="docs-card">
+            <code>.max-w-prose .rounded-4xl .shadow-2xl .ring-purple</code>
+            <p class="mt-4">Surface-утилиты для premium cards, overlays, product highlights и контентных блоков.</p>
+            <div class="demo-slab">
+              <div class="max-w-prose p-5 rounded-4xl bg-white shadow-2xl ring-purple">
+                <div class="text-sm uppercase tracking-widest text-purple mb-2">Surface</div>
+                <div class="font-bold text-gray-800">Elevated premium card</div>
+              </div>
+            </div>
+            <button class="copy-btn" data-code=".max-w-prose .rounded-4xl .shadow-2xl .ring-purple">Копировать</button>
+          </article>
         </div>
       </div>
     </section>
@@ -800,7 +867,7 @@
             <h2 class="section-title">Живые motion и state-демо</h2>
           </div>
           <p class="section-text">
-            Этот блок не просто рассказывает о классах, а переключает реальные utility-комбинации на одном компоненте: анимации, фоны, состояния, тени и кнопки.
+            Этот блок переключает реальные utility-комбинации на одном компоненте: анимации, surfaces, фоны, состояния, тени и кнопки.
           </p>
         </div>
 
@@ -894,14 +961,27 @@
             <h2 class="section-title">Пробуй новые utility-классы сразу на странице</h2>
           </div>
           <p class="section-text">
-            Редактируй HTML слева и смотри результат справа. Стартовый пример — цельная карточка: spacing, цвета, типографика, градиент, фильтры и состояния кнопок.
+            Редактируй HTML слева и смотри результат справа. Стартовый пример собирает в одном блоке spacing, colors, typography, filters, surfaces и button states.
           </p>
         </div>
 
         <div class="playground-card">
+          <div class="playground-shell">
+            <div class="playground-bar">
+              <div>
+                <h3 class="font-black tracking-tight">Live Builder Workspace</h3>
+                <div class="text-sm text-gray-300 mt-1">Две панели для быстрого теста utility-комбинаций и surface-сценариев.</div>
+              </div>
+              <div class="playground-pills">
+                <span class="playground-pill">Typography</span>
+                <span class="playground-pill">Filters</span>
+                <span class="playground-pill">Surfaces</span>
+              </div>
+            </div>
+
           <div class="editor-wrap">
             <textarea id="code-input" class="editor" spellcheck="false">
-<div class="mx-auto max-w-lg space-y-6 p-8 rounded-3xl bg-white shadow-lg border border-gray-100">
+<div class="mx-auto max-w-lg space-y-6 p-8 rounded-4xl bg-white shadow-2xl border border-gray-200">
   <div class="flex items-start gap-4">
     <div class="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-br from-orange to-sky flex items-center justify-center text-white font-black shadow-md">M</div>
     <div class="space-y-2 min-w-0">
@@ -912,7 +992,7 @@
   </div>
 
   <div class="flex gap-3 items-stretch">
-    <div class="flex-1 rounded-2xl bg-gray-50 border border-gray-100 p-4 space-y-3">
+    <div class="flex-1 rounded-2xl bg-gray-50 border border-gray-200 p-4 space-y-3">
       <div class="text-xs font-semibold uppercase tracking-wide text-gray-500">Ритм контента</div>
       <div class="space-y-2">
         <div class="h-2 w-3/4 rounded-full bg-gray-200"></div>
@@ -923,7 +1003,7 @@
     <div class="w-20 shrink-0 rounded-2xl bg-gradient-to-br from-pink to-purple animate-float shadow-inner"></div>
   </div>
 
-  <div class="p-5 rounded-2xl bg-white backdrop-blur border border-slate shadow-sm space-y-2">
+  <div class="p-5 rounded-3xl bg-white backdrop-blur border border-slate shadow-lg space-y-2">
     <p class="font-serif text-lg font-extrabold text-slate tracking-tight antialiased">Типографика и «стекло»</p>
     <p class="text-sm text-gray-600 leading-relaxed">Сочетание backdrop-blur, мягкой рамки и serif для акцента.</p>
   </div>
@@ -935,6 +1015,7 @@
 </div></textarea>
 
             <div id="live-preview" class="preview"></div>
+          </div>
           </div>
           <p class="playground-note mt-4">Совет: попробуй заменить `space-y-6` на `space-y-2`, `rounded-3xl` на `rounded-lg`, `bg-sky-10` на `bg-rose-10`, `font-black` на `font-extrabold` или добавить `backdrop-blur` и `contrast-125` и сразу увидишь разницу.</p>
         </div>
