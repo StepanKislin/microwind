@@ -78,6 +78,3 @@ MicroWind — это один файл `microwind.css`, который можн�
 - отдельными секциями по display, spacing, layout, sizing, position, surfaces, colors, typography, filters, motion, states, composition, utility recipes и responsive;
 - живыми интерактивными демо-компонентами.
 
-## Лицензия
-
-MIT
