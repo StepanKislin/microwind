@@ -38,7 +38,7 @@ MicroWind — это один файл `microwind.css`, который можн�
 Через GitHub Pages:
 
 ```html
-<link rel="stylesheet" href="https://username.github.io/repository/microwind.css">
+<link rel="stylesheet" href="https://stepankislin.github.io/repository/microwind.css">
 ```
 
 ## Примеры классов
