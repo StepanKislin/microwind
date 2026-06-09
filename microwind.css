@@ -65,7 +65,7 @@
     --mw-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --mw-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
-
+/* Standard values */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body { font-family: var(--mw-font-sans); line-height: 1.6; color: var(--mw-gray-900); background: var(--mw-white); }
